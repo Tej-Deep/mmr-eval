@@ -35,8 +35,8 @@ This repository provides an overview of all resources for the paper ["Training V
     - [VL-PRM-3B](https://huggingface.co/ob11/Q3B_mc0_sr_mc0_full_bs2_gs4_lr1e-5_VF_0827_1452)
     - [VL-PRM-7B](https://huggingface.co/ob11/Q7B_mc0_sr_mc0_full_bs2_gs4_lr1e-5_VF_0826_2309)
 - **Data**: 
-    - [Raw](https://hf.co/datasets/simplescaling/s1K-1.1)
-    - [Training](https://hf.co/datasets/simplescaling/s1K-1.1)
+    - [Raw]()
+    - [Training]()
 
 ### Structure
 
