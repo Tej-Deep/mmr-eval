@@ -35,8 +35,8 @@ from utils.accuracy_reward import (check_answer, parse_answer)
 from utils.utils import localtime
 
 # Azure OpenAI Configuration
-endpoint = "https://decla-mbnfcymf-spaincentral.cognitiveservices.azure.com/"
-deployment = "gpt-4.1-22"
+endpoint = "<INSERT_AZURE_ENDPOINT_HERE>" # example: "https://mbnfcymf-spaincentral.cognitiveservices.azure.com/"
+deployment = "<INSERT_AZURE_DEPLOYMENT_HERE>" # example: "gpt-4.1-spain"
 api_version = "2025-01-01-preview"
 
 client = AzureOpenAI(
