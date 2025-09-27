@@ -30,12 +30,9 @@ import threading
 # Initialize logger early to avoid NameError issues
 logger = logging.getLogger('vqav2_rollout')
 
-# Add the tools directory to the path
-sys.path.append('/data/users/brandon/ob1-projects/InternVL/internvl_chat/tools')
+from utils.accuracy_reward import (check_answer, parse_answer)
 
-from reasoning_data_pipeline.utils.accuracy_reward import (check_answer, parse_answer)
-
-from reasoning_data_pipeline.utils.utils import localtime
+from utils.utils import localtime
 
 # Azure OpenAI Configuration
 endpoint = "https://decla-mbnfcymf-spaincentral.cognitiveservices.azure.com/"
