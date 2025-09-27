@@ -893,8 +893,8 @@ args = {
     'endpoint': endpoint,
     'deployment': deployment,
     'api_version': api_version,
-    'prompt_path': '/data/users/brandon/ob1-projects/InternVL/internvl_chat/rollout_generation/preprocessed_prompts/preprocessing_scripts/VQAv2/prepared_jsonl/vqav2_run1_int_only_4K_v1_subset.jsonl',
-    'out_dir': 'vqav2_int_rollouts_output',
+    'prompt_path': 'input_data_files/VQAv2/prepared_jsonl/vqav2_run1_int_only_4K_v1_subset.jsonl',
+    'out_dir': 'rollout_output/vqav2_int_only_rollout_outputs',
     'batch_size': 15,  # ~20 samples per batch
     'num_return_sequences': 6,  # 20×4 = 80 requests per batch (ensure this is FAST less than 20s so we are rate limited at the TPM level in phase 2)
     'sample_start_idx': 3201, # for line-based idx, start from 1-indexed
