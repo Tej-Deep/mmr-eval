@@ -5,7 +5,7 @@
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROLLOUT_SCRIPT="$SCRIPT_DIR/rollout.py"
-OUTPUT_DIR="$SCRIPT_DIR/vqav2_int_rollouts_output"
+OUTPUT_DIR="$SCRIPT_DIR/rollout_output"
 LOG_DIR="$OUTPUT_DIR/screen_logs"
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)
 SCREEN_NAME="vqav2_rollout_$TIMESTAMP"
