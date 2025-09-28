@@ -2,8 +2,9 @@
 
 1. Transfer all images and their absolute paths to input_data_files/{dataset_name} (refer to VQAv2 example provided)
 2. Specify the Azure endpoints, deployment and config in rollout.py
-    - edit check_answer function in rollout.py to match the answer format of the dataset
-    - check_answer (set prompt_format_version), parse_answer (set scoring_mode)
+    - Edit the parse_answer and check_answer functions in rollout.py to match the answer format of the dataset
+        - parse_answer is configured by setting scoring_mode, depending on the format of the answer. See parsing functions in accuracy_reward.py
+        - check_answer is configured by setting prompt_format_version, depending on the data type of the answer (e.g. integer only, string only exact match, LLM as judge string match). Trace accuracy_reward.py to see how different modes are configured.
     - run ./run_rollout.sh (no parameters) to generate rollouts
 3. Transfer completed rollouts to generated_rollouts/soft_estimation/{dataset_name}/final_output/{split_name}
 4. run ./run_batch_processor.sh to verify the rollouts, checking for parameters in batch_processor.py
