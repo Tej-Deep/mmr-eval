@@ -1,6 +1,7 @@
 # Rolling Out and Step-Wise Verification
 
-1. Transfer all images and their absolute paths to input_data_files/{dataset_name} (refer to VQAv2 example provided)
+1. Transfer dataset images and their corresponding JSON paths containing absolute image paths to input_data_files/{dataset_name} 
+    - refer to VQAv2 example provided
 2. Specify the Azure endpoints, deployment and config in ```rollout.py```
     - Edit the parse_answer and check_answer functions in ```rollout.py``` to match the answer format of the dataset
         - parse_answer is configured by setting scoring_mode, depending on the format of the answer. See parsing functions in ```accuracy_reward.py```
