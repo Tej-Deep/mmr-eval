@@ -34,6 +34,9 @@ This repository provides an overview of all resources for the paper ["Training V
 - **Model**:
     - [VL-PRM-3B](https://huggingface.co/ob11/Q3B_mc0_sr_mc0_full_bs2_gs4_lr1e-5_VF_0827_1452)
     - [VL-PRM-7B](https://huggingface.co/ob11/Q7B_mc0_sr_mc0_full_bs2_gs4_lr1e-5_VF_0826_2309)
+- **Weight and Biases Training Logs**:
+    - [VL-PRM-3B](https://wandb.ai/ob11/VL-PRMs/runs/0m0lmdzq)
+    - [VL-PRM-7B](https://wandb.ai/ob11/VL-PRMs/runs/1m0lmdzq)
 - **VL-PRM300K Dataset**: 
     - [Raw Version]()
     - [Training Version]()
