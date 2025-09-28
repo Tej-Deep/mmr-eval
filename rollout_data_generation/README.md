@@ -16,7 +16,7 @@
     - Usage: ```AZURE_API_KEY='your-key' ./run_batch_processor.sh [screen_session_name] [batch_start_index] [batch_end_index] [split] [azure_endpoint] [check_interval] [model]```
 
 # Known Issues
-- For datasets like AI2D, InfoVQA, PuzzleTest, content filter errors are common for certain questions, and are avoidable. We drop these rollouts in the training data.
+- For datasets like AI2D, InfoVQA, PuzzleTest, Azure will return content filter errors and are unavoidable, unfortunately we cannot use such samples for training. We drop these rollouts in the training data.
 
 - If content filter error thrown, API will return response "Content filter error", which results in a "fail to parse" error, and the prompt will be skipped, with error "fail to parse" in the log.
 
