@@ -8,10 +8,10 @@
     - run ```./run_rollout.sh (no parameters)``` to generate rollouts
 3. Transfer rollouts outputs to rollout_data_generation/llm_judge_verification/rollout_output_data_files/{dataset_name}/{split_name}
     - we recommend to keep the raw rollout outputs untouched, and make a copy to process in the next step in case for processing errors that might "corrupt" the raw rollout outputs
-4. Prepare batches using ```merge_and_map_batch.py```, then run ```./run_batch_processor.sh``` in rollout_data_generation/llm_judge_verification to verify the rollouts, setting the required parameters in ```batch_processor.py```
+4. Prepare batches using ```merge_and_map_batch.py```, then run ```./run_batch_processor.sh``` in rollout_data_generation/llm_judge_verification to verify the rollouts, with the required parameters expected in ```batch_processor.py```
     - Usage: ```python merge_and_map_batch.py --split="vqav2_4k" --model="gpt-4.1-nano-3"```
         - Azure Batch API expects the model to be specified in the JSONL file along with prompt*
-        - ```merge_and_map_batch.py``` processes each JSONL file into a batch files that meet the Azure Batch API constraints e.g. max tokens per batch, max file size, lines per batch. (see Azure Batch API documentation for more details)
+        - ```merge_and_map_batch.py``` prepares input batch files that fulfil the Azure Batch API requirements e.g. max tokens per batch, max file size, lines per batch. (see Azure Batch API documentation for more details)
     - Usage: ```AZURE_API_KEY='your-key' ./run_batch_processor.sh [screen_session_name] [batch_start_index] [batch_end_index] [split] [azure_endpoint] [check_interval] [model]```
 
 # Known Issues
