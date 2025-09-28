@@ -44,8 +44,8 @@ This repository provides an overview of all resources for the paper ["Training V
     - [Qwen2.5-VL-3B](https://huggingface.co/datasets/ob11/VL-PRMs/results/Qwen2.5-VL-3B)
     - [Qwen2.5-VL-7B](https://huggingface.co/datasets/ob11/VL-PRMs/results/Qwen2.5-VL-7B)
     - [Qwen2.5-VL-32B](https://huggingface.co/datasets/ob11/VL-PRMs/results/Qwen2.5-VL-7B)
-    - [Gemma3-12B](https://huggingface.co/datasets/ob11/VL-PRMs/results/Gemma3-12B)
-    - [Gemma3-27B](https://huggingface.co/datasets/ob11/VL-PRMs/results/Gemma3-27B)
+    - [Gemma3-12B-it](https://huggingface.co/datasets/ob11/VL-PRMs/results/Gemma3-12B-it)
+    - [Gemma3-27B-it](https://huggingface.co/datasets/ob11/VL-PRMs/results/Gemma3-27B-it)
     - [MiniCPM-V-2.6](https://huggingface.co/datasets/ob11/VL-PRMs/results/MiniCPM-V-2.6)
     - [VisualPRM-8B](https://huggingface.co/datasets/ob11/VL-PRMs/results/VisualPRM-8B)
 
