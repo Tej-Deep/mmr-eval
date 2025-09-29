@@ -30,16 +30,16 @@ This repository provides an overview of all resources for the paper ["Training V
 
 ### Artifacts
 
-- **Paper**: 
+- **Paper**:
+- **VL-PRM300K Dataset**: 
+    - [Raw Version](https://huggingface.co/datasets/ob11/VL-PRM300K)
+    - [Training Version](https://huggingface.co/datasets/ob11/VL-PRM300K-V1-train) 
 - **Model**:
     - [VL-PRM-3B](https://huggingface.co/ob11/Qwen-VL-PRM-3B)
     - [VL-PRM-7B](https://huggingface.co/ob11/Qwen-VL-PRM-7B)
 - **Weight and Biases Training Logs**:
     - [VL-PRM-3B](https://wandb.ai/aisg-arf/multimodal-reasoning/runs/pnsncs80)
     - [VL-PRM-7B](https://wandb.ai/aisg-arf/multimodal-reasoning/runs/pj4oc0qh)
-- **VL-PRM300K Dataset**: 
-    - [Raw Version](https://huggingface.co/datasets/ob11/VL-PRM300K)
-    - [Training Version](https://huggingface.co/datasets/ob11/VL-PRM300K-V1-train)
 - **Evaluation Files**: 
     - All our evaluation result files are at: https://huggingface.co/datasets/ob11/VL-PRM-Evaluation-Results
 
