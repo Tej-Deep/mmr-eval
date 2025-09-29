@@ -40,14 +40,8 @@ This repository provides an overview of all resources for the paper ["Training V
 - **VL-PRM300K Dataset**: 
     - [Raw Version](https://huggingface.co/datasets/ob11/VL-PRM300K)
     - [Training Version](https://huggingface.co/datasets/ob11/VL-PRM300K-V1-train)
-- **Evaluation Outputs**: 
-    - [Qwen2.5-VL-3B](https://huggingface.co/datasets/ob11/VL-PRMs/results/Qwen2.5-VL-3B)
-    - [Qwen2.5-VL-7B](https://huggingface.co/datasets/ob11/VL-PRMs/results/Qwen2.5-VL-7B)
-    - [Qwen2.5-VL-32B](https://huggingface.co/datasets/ob11/VL-PRMs/results/Qwen2.5-VL-7B)
-    - [Gemma3-12B-it](https://huggingface.co/datasets/ob11/VL-PRMs/results/Gemma3-12B-it)
-    - [Gemma3-27B-it](https://huggingface.co/datasets/ob11/VL-PRMs/results/Gemma3-27B-it)
-    - [MiniCPM-V-2.6](https://huggingface.co/datasets/ob11/VL-PRMs/results/MiniCPM-V-2.6)
-    - [VisualPRM-8B](https://huggingface.co/datasets/ob11/VL-PRMs/results/VisualPRM-8B)
+- **Evaluation Files**: 
+    - All our evaluation result files are at: https://huggingface.co/datasets/ob11/VL-PRM-Evaluation-Results
 
 ### Structure
 
@@ -60,7 +54,7 @@ This repository provides an overview of all resources for the paper ["Training V
 
 To run training, you can find the script `train/sft_qwen.py` by using the `train/sft_qwen.sh` script, or you can launch a sweep via `train/launch.sh` if you are on a PBS cluster.
 
-To train VL-PRM-3B/VL-PRM-7B, we recommend 8 H100/H200 GPUs i.e. 1 node with 8 GPUs.
+To train VL-PRM-3B/VL-PRM-7B, we recommend 8 H100/H200 GPUs i.e. 1 node with 8 GPUs. We used 8 H200 GPUs for most of our jobs.
 
 Quick start:
 ```
