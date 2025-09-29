@@ -71,7 +71,7 @@ We cloned [VLMEvalKit](https://github.com/open-compass/VLMEvalKit) at commit `<c
 
 You can launch the evaluation using `eval/launch_eval.sh`. 
 
-All our evaluation result files are at: https://hf.co/datasets/ob11/VL-PRMs/results
+All our evaluation result files are at: https://huggingface.co/datasets/ob11/VL-PRM-Evaluation-Results/
 
 ### Data
 
