@@ -2,22 +2,15 @@ import os
 import logging
 from datetime import datetime
 from dataclasses import dataclass, field
-from PIL import Image
 import torch
 from datasets import Dataset, DatasetDict, load_dataset
-import json
 from transformers import (
     AutoModelForVision2Seq,
     AutoProcessor,
-    LlavaForConditionalGeneration,
-    LlavaNextProcessor,
-    Qwen2VLProcessor,
     Qwen2VLForConditionalGeneration,
     Qwen2_5_VLForConditionalGeneration,
-    LlavaNextForConditionalGeneration,
 )
 from qwen_vl_utils import process_vision_info
-from datasets import load_from_disk
 
 from trl import (
     ModelConfig,
@@ -49,19 +42,7 @@ def get_vision_component(model):
                 f"Qwen model {model.__class__.__name__} does not have 'visual' attribute"
             )
 
-    # Llava models use model.vision_tower
-    elif isinstance(
-        model, (LlavaForConditionalGeneration, LlavaNextForConditionalGeneration)
-    ):
-        if hasattr(model, "vision_tower"):
-            return model.vision_tower
-        else:
-            raise ValueError(
-                f"Llava model {model.__class__.__name__} does not have 'vision_tower' attribute"
-            )
-
     else:
-        # Fallback - try common attributes for unknown model types
         model_class_name = model.__class__.__name__
 
         raise ValueError(
@@ -70,7 +51,7 @@ def get_vision_component(model):
 
 
 def set_model_vision_freezing(model, tune_vision):
-    """Freeze/unfreeze vision encoder parameters - works for both Qwen and LlavaNext models"""
+    """Freeze/unfreeze vision encoder parameters - works for both Qwen models"""
     vision_component = get_vision_component(model)
 
     if tune_vision:
@@ -103,10 +84,6 @@ def log_detailed_parameter_status(model):
         model, (Qwen2VLForConditionalGeneration, Qwen2_5_VLForConditionalGeneration)
     ):
         vision_attr_name = "visual"
-    elif isinstance(
-        model, (LlavaForConditionalGeneration, LlavaNextForConditionalGeneration)
-    ):
-        vision_attr_name = "vision_tower"
     else:
         # Fallback - determine by what attribute exists
         vision_attr_name = "visual" if hasattr(model, "visual") else "vision_tower"
@@ -207,31 +184,6 @@ class DataArguments:
         metadata={"help": "Whether to train vision encoder parameters (False freezes VIT)"}
     )
 
-"""
-pip install pillow
-
-# Tested on 8x H100 GPUs
-accelerate launch
-    --config_file=examples/accelerate_configs/deepspeed_zero3.yaml \
-    examples/scripts/sft_vlm.py \
-    --dataset_name HuggingFaceH4/llava-instruct-mix-vsft \
-    --model_name_or_path llava-hf/llava-1.5-7b-hf \
-    --per_device_train_batch_size 8 \
-    --gradient_accumulation_steps 8 \
-    --output_dir sft-llava-1.5-7b-hf \
-    --bf16 \
-    --torch_dtype bfloat16 \
-    --gradient_checkpointing
-
-accelerate launch --config_file=train/deepspeed_zero3.yaml train/sft.py --dataset_name ob11/ai2d-prm-training-data-v0.1 --model_name_or_path meta-llama/Llama-3.2-11B-Vision-Instruct --per_device_train_batch_size 8 --gradient_accumulation_steps 8 --output_dir sft-meta-llama-3.2-11b-vision-instruct --bf16 True --torch_dtype bfloat16 --gradient_checkpointing
-
-For LLaVA-NeXT, use: (requires transformers>=4.45)
-    --model_name_or_path llava-hf/llava-v1.6-mistral-7b-hf
-
-For meta-llama/Llama-3.2-11B-Vision-Instruct, use: (requires transformers>=4.45.1)
-    --model_name_or_path meta-llama/Llama-3.2-11B-Vision-Instruct
-"""
-
 if __name__ == "__main__":
     parser = TrlParser((ScriptArguments, SFTConfig, ModelConfig, DataArguments))
     script_args, training_args, model_args, data_args = parser.parse_args_and_config()
@@ -247,7 +199,6 @@ if __name__ == "__main__":
 
     # training_args.deepspeed = "train/configs/ds_config_zero3.json"
     
-    # Set logging directory to output_dir with datetime suffix
     if training_args.output_dir:
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         training_args.logging_dir = os.path.join(training_args.output_dir, "run_logs", f"run-{timestamp}")
@@ -257,18 +208,10 @@ if __name__ == "__main__":
     
     # Enable Weights & Biases reporting while keeping physical text logs
     training_args.report_to = ["wandb"]
-    os.environ["WANDB_PROJECT"] = "multimodal-reasoning"
-    os.environ["WANDB_ENTITY"] = "aisg-arf"
+    os.environ["WANDB_PROJECT"] = "multimodal-reasoning" # TODO
+    os.environ["WANDB_ENTITY"] = "aisg-arf" # TODO
     logging.info("Enabled Weights & Biases reporting with project: multimodal-reasoning")
-    # Parse out training_outputs prefix and restructure run name
-    # if training_args.run_name.startswith("training_outputs/"):
-    #     # Remove training_outputs/ prefix and keep the rest
-    #     run_name_without_prefix = training_args.run_name.replace("training_outputs/", "", 1)
-    #     training_args.run_name = f"{run_name_without_prefix}"
-    # else:
-    #     training_args.run_name = f"{training_args.run_name}"
     
-    # Set up file logging to the logging directory for physical text logs
     if training_args.logging_dir:
         log_file = os.path.join(training_args.logging_dir, "training.log")
         file_handler = logging.FileHandler(log_file)
@@ -303,18 +246,13 @@ if __name__ == "__main__":
         trust_remote_code=model_args.trust_remote_code,
         **model_kwargs,
     )
-    if isinstance(model, LlavaNextForConditionalGeneration):
-        processor = LlavaNextProcessor.from_pretrained(
-            model_args.model_name_or_path,
-            trust_remote_code=model_args.trust_remote_code,
-        )
-    else:
-        processor = AutoProcessor.from_pretrained(
-            model_args.model_name_or_path,
-            trust_remote_code=model_args.trust_remote_code,
-            max_pixels=data_args.max_pixels,
-            min_pixels=data_args.min_pixels,
-        )
+
+    processor = AutoProcessor.from_pretrained(
+        model_args.model_name_or_path,
+        trust_remote_code=model_args.trust_remote_code,
+        max_pixels=data_args.max_pixels,
+        min_pixels=data_args.min_pixels,
+    )
 
     model.to("cuda")
     # Move model to GPU when using Flash Attention 2.0
@@ -349,13 +287,6 @@ if __name__ == "__main__":
         logging.info(
             f"DEBUG: Image should be PIL Image as input to processor: {[type(img[0]) if img else 'None' for img in images]}"
         )
-        # if isinstance(model, LlavaForConditionalGeneration):
-        #     # LLava1.5 does not support multiple images
-        #     images = [image[0] for image in images]
-
-        # Set processor constraints BEFORE processing
-        # processor.max_pixels = data_args.max_pixels
-        # processor.min_pixels = data_args.min_pixels
 
         # Tokenize the texts and process the images
         batch = processor(text=texts, images=images, return_tensors="pt", padding=True)
@@ -363,11 +294,10 @@ if __name__ == "__main__":
         # The labels are the input_ids, and we mask the padding tokens in the loss computation
         labels = batch["input_ids"].clone()
 
-        # Ignore ALL the prompt token indexes in the loss computation, as we only care about the PRM <+> and <-> token losses
+        # Ignore ALL the prompt token indexes in the loss computation, as we only care about the PRM token losses
         # First, mask everything as -100
         labels[:, :] = -100
 
-        # Now unmask only the assistant tokens (<+> and <->)
         good_token_id = processor.tokenizer.convert_tokens_to_ids(
             "+"
         )
@@ -375,39 +305,13 @@ if __name__ == "__main__":
             "-"
         )
 
-        # verify tokens are single token ids
-        # if not good_token_id == 151666 or not bad_token_id == 151665:
-        #     raise ValueError(f"PRM tokens must be single tokens. Got: {good_token_id}, {bad_token_id}")
-
-        # if processor.tokenizer.pad_token_id in [good_token_id, bad_token_id]:
-        #     raise ValueError("Pad token ID conflicts with PRM token IDs")
-
         # Find positions of these tokens and unmask them
         assistant_token_mask = (batch["input_ids"] == good_token_id) | (
             batch["input_ids"] == bad_token_id
         )
         labels[assistant_token_mask] = batch["input_ids"][assistant_token_mask]
 
-        # Uncomment this section for normal SFT training
-        # labels[labels == processor.tokenizer.pad_token_id] = -100
-
-        # # Ignore the image token index in the loss computation (model specific)
-        # if isinstance(processor, Qwen2VLProcessor):
-        #     image_tokens = [151652,151653,151655]
-        # else: 
-        #     image_tokens = [processor.tokenizer.convert_tokens_to_ids(processor.image_token)]
-
-        # for image_token_id in image_tokens:
-        #     labels[labels == image_token_id] = -100
-        # END OF NORMAL SFT TRAINING SECTION
-
         batch["labels"] = labels
-
-        # print("input_ids", batch["input_ids"][0].tolist())
-        # print("attention_mask", batch["attention_mask"][0].tolist())
-        # print("labels", batch["labels"][0].tolist())
-        # print(f"{len(batch['input_ids'].tolist()[0])=}")
-        # print("============")
 
         return batch
 
@@ -424,8 +328,6 @@ if __name__ == "__main__":
     # You can now use data_args.max_pixels and data_args.min_pixels in your dataset processing
     logging.info(f"Using max_pixels: {data_args.max_pixels}, min_pixels: {data_args.min_pixels}")
 
-    # training_dataset = load_from_disk("prm-training-data-qwen")
-    # logging.info(f"training_dataset: {training_dataset}")
 
     ################
     # Training
@@ -436,9 +338,7 @@ if __name__ == "__main__":
         data_collator=collate_fn,
         train_dataset=training_dataset["train"], # train on full dataset for now
         eval_dataset=None,
-        # eval_dataset=dataset[script_args.dataset_test_split] if training_args.eval_strategy != "no" else None,
         processing_class=processor.tokenizer,
-        # peft_config=get_peft_config(model_args),
     )
 
     # Apply vision encoder freezing
