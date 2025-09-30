@@ -6,19 +6,13 @@
 
 # Arrays of models to sweep
 models=(
+    "Qwen/Qwen2.5-VL-3B-Instruct"
     "Qwen/Qwen2.5-VL-7B-Instruct"
-    # "./custom_token_models/Qwen2.5-VL-7B-Instruct-updated-tokens"
-    # "./custom_token_models/Qwen2.5-VL-7B-Instruct-updated-tokens-random-init-vals"
 )
 
 # Arrays of datasets to sweep (from qwenvl/data/__init__.py)
 datasets=(
-    # "mc0_visualprm_data_normal_tok_full_non_balanced_v2%100"
-    # "mc0_visualprm_data_normal_tok_errors_balanced_v2%100"
-    "mc0_visualprm_data_normal_tok_ablation_only_reasoning_errors_v2%100"
-    # "mc0_visualprm_data_custom_tok_full_non_balanced_v2%100"
-    # "mc0_visualprm_data_custom_tok_errors_balanced_v4%100"
-    # "mc0_visualprm_data_custom_tok_ablation_only_reasoning_errors_v4%100"
+    "VL-PRM300K-V1-train"
 )
 
 # Vision tuning options to sweep
@@ -29,12 +23,12 @@ tune_mm_vision_options=(
 
 # Image size options to sweep
 image_sizes=(
-    # "smart-resize"  # Use image_qwen_smart_resize key
-    "qwen-size"     # Use image key
+    "smart-resize"  # Use image_qwen_smart_resize key
+    # "qwen-size"     # Use image key
 )
 
 # Base job name
-base_job_name="md-sp-v2-7b"
+base_job_name="train-VL-PRM"
 
 # Counter for job submissions
 job_count=0
