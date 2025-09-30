@@ -86,8 +86,8 @@ To recreate VL-PRM-300K follow the steps in `rollout_data_generation/README.md`.
 
 ```bibtex
 @misc{ong2025vlprms,
-      title={Training Vision-Language Process Reward Models (VL-PRMs) for Test-Time Scaling in Multimodal Reasoning: Key Insights and Lessons Learned}, 
-      author={Brandon Ong, Tej Deep Pala, Vernon Toh, William Chandra Tjhi and Soujanya Poria},
+      title={Training Vision-Language Process Reward Models for Test-Time Scaling in Multimodal Reasoning: Key Insights and Lessons Learned}, 
+      author={Brandon Ong, Tej Deep Pala, Vernon Toh, William Chandra Tjhi, and Soujanya Poria},
       year={2025},
       eprint={2509.23250},
       archivePrefix={arXiv},
