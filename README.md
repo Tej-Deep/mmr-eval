@@ -1,11 +1,11 @@
 <div align="center">
-  <h1>VL-PRMs: Vision-Language Process Reward Models</h1>
+  <h1>Training Vision-Language Process Reward Models (VL-PRMs) for Test-Time Scaling in Multimodal Reasoning: Key Insights and Lessons Learned</h1>
   <p>Training VL-PRMs with abstract reasoning problems results in strong generalization and reasoning performance improvements for Qwen2.5-VL and Gemma 3 family of models when used in test-time scaling settings.
  </p>
 </div>
 <br>
 
-![](visuals/)
+<!-- ![](visuals/) -->
 
 ****************************************************************
 
