@@ -11,22 +11,18 @@
 
 **Updates:**
 
-* 2025-09: Released VL-PRMs: [Arxiv]()
+* 2025-09: Released VL-PRMs: [Arxiv](https://arxiv.org/pdf/2509.23250)
 
 ****************************************************************
 
-This repository provides an overview of all resources for the paper ["Training Vision-Language Process Reward Models for Test-Time Scaling in Multimodal Reasoning: Key Insights and Lessons Learned"]().
+This repository provides an overview of all resources for the paper ["Training Vision-Language Process Reward Models for Test-Time Scaling in Multimodal Reasoning: Key Insights and Lessons Learned"](https://arxiv.org/pdf/2509.23250).
 
 - [Artifacts](#artifacts)
 - [Structure](#structure)
 - [Data](#data)
 - [Training](#training)
 - [Evaluation](#evaluation)
-    - [vLLM](#vllm)
-    - [transformers](#transformers)
-- [Visuals](#visuals)
 - [Known Issues](#known-issues)
-- [Citation](#citation)
 
 ### Artifacts
 
@@ -90,12 +86,12 @@ To recreate VL-PRM-300K follow the steps in `rollout_data_generation/README.md`.
 
 ```bibtex
 @misc{ong2025vlprms,
-      title={VL-PRMs: Vision-Language Process Reward Models}, 
+      title={Training Vision-Language Process Reward Models (VL-PRMs) for Test-Time Scaling in Multimodal Reasoning: Key Insights and Lessons Learned}, 
       author={Brandon Ong, Tej Deep Pala, Vernon Toh, William Chandra Tjhi and Soujanya Poria},
       year={2025},
-      eprint={},
+      eprint={2509.23250},
       archivePrefix={arXiv},
-      primaryClass={cs.CL},
-      url={}, 
+      primaryClass={cs.AI},
+      url={https://arxiv.org/pdf/2509.23250}, 
 }
 ```
