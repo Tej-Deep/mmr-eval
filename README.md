@@ -61,8 +61,8 @@ To train VL-PRM-3B/VL-PRM-7B, we recommend 8 H100/H200 GPUs i.e. 1 node with 8 G
 
 Quick start:
 ```
-git clone https://github.com/ob11/VL-PRMs.git
-cd VL-PRMs
+git clone https://github.com/theogbrand/vlprm.git
+cd vlprm/train/huggingface_trainer
 uv pip install -r requirements.txt
 bash train/sft_qwen.sh
 ```
