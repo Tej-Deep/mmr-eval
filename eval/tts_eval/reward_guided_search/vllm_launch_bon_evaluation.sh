@@ -3,11 +3,8 @@
 # Launcher script to submit multiple PBS jobs for BoN evaluation
 # Each checkpoint gets its own PBS job submitted to the queue
 
-# CHECKPOINT_BASE_PATH="/scratch_aisg/SPEC-SF-AISG/ob1/prm-training-code/qwen_training/outputs"
 CHECKPOINT_BASE_PATH="/scratch_aisg/SPEC-SF-AISG/ob1/prm-training-code/training_outputs"
 
-# Policy model configuration - the model used for generating responses
-# POLICY_MODEL_PATH="google/gemma-3-12b-it" # Options: "google/gemma-3-12/27b-it", "Qwen/Qwen2.5-VL-3/7/32/72B-Instruct"
 POLICY_MODEL_PATH="Qwen/Qwen2.5-VL-3B-Instruct" # Options: "google/gemma-3-12/27b-it", "Qwen/Qwen2.5-VL-3/7/32/72B-Instruct"
 # POLICY_MODEL_PATH="google/gemma-3-27b-it"
 
@@ -31,13 +28,6 @@ CHECKPOINT_NAMES=(
     "Q7B_mc0_sr_mc0_balanced_bs2_gs4_lr1e-5_VF_0826_2309"
     # "Q7B_mc0_sr_mc0_full_bs2_gs4_lr1e-5_VF_0826_2309"
     # "Q7B_mc0_sr_mc0_ablation_bs2_gs4_lr1e-5_VF_0826_2309"
-    
-    # "Qwen/Qwen2.5-VL-7B-Instruct"
-
-    # MC-only, VIT Trained, Qwen Sized
-    # "sft-data-v2-mc0.0-normal-token-Qwen/Qwen2.5-VL-7B-Instruct-20250823_001004"
-    # MC-only, VIT Frozen, bs2gs1, Qwen Sized
-    # "sft-data-v2-mc0.0-normal-token-Qwen/Qwen2.5-VL-7B-Instruct-20250822_224401"
 )
 
 # Parallel execution flag (set to "true" to use 8 GPUs in parallel)
