@@ -26,7 +26,7 @@ This repository provides an overview of all resources for the paper ["Training V
 
 ### Artifacts
 
-- **Paper**:
+- **Paper**: https://arxiv.org/pdf/2509.23250
 - **VL-PRM300K Dataset**: 
     - [Raw Version](https://huggingface.co/datasets/ob11/VL-PRM300K)
     - [Training Version](https://huggingface.co/datasets/ob11/VL-PRM300K-V1-train) 
