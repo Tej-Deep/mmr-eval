@@ -87,7 +87,7 @@ def log_detailed_parameter_status(model):
     else:
         # Fallback - determine by what attribute exists
         vision_attr_name = "visual" if hasattr(model, "visual") else "vision_tower"
-    logging.info(f"\n🔍 VISION ENCODER (model.{vision_attr_name}) PARAMETERS:")
+    logging.info(f"\nVISION ENCODER (model.{vision_attr_name}) PARAMETERS:")
     vision_trainable = []
     vision_frozen = []
 
@@ -98,14 +98,14 @@ def log_detailed_parameter_status(model):
         else:
             vision_frozen.append((name, param_count))
     
-    logging.info(f"\n✅ TRAINABLE Vision Parameters ({len(vision_trainable)} layers):")
+    logging.info(f"\nTRAINABLE Vision Parameters ({len(vision_trainable)} layers):")
     total_trainable = 0
     for name, count in vision_trainable:
         logging.info(f"  {name}: {count:,} params")
         total_trainable += count
     logging.info(f"  → Total trainable vision params: {total_trainable:,}")
     
-    logging.info(f"\n❄️  FROZEN Vision Parameters ({len(vision_frozen)} layers):")
+    logging.info(f"\nFROZEN Vision Parameters ({len(vision_frozen)} layers):")
     total_frozen = 0
     for name, count in vision_frozen:
         logging.info(f"  {name}: {count:,} params")
@@ -113,7 +113,7 @@ def log_detailed_parameter_status(model):
     logging.info(f"  → Total frozen vision params: {total_frozen:,}")
     
     # Overall model status
-    logging.info("\n📊 OVERALL MODEL PARAMETER STATUS:")
+    logging.info("\nOVERALL MODEL PARAMETER STATUS:")
     total_model_params = sum(p.numel() for p in model.parameters())
     total_model_trainable = sum(p.numel() for p in model.parameters() if p.requires_grad)
     total_model_frozen = total_model_params - total_model_trainable
@@ -125,7 +125,7 @@ def log_detailed_parameter_status(model):
     # Memory savings estimate
     if total_model_frozen > 0:
         memory_savings_pct = 100 * total_model_frozen / total_model_params
-        logging.info(f"  💾 Estimated memory savings from freezing: ~{memory_savings_pct:.1f}%")
+        logging.info(f"  Estimated memory savings from freezing: ~{memory_savings_pct:.1f}%")
     
     logging.info("=" * 80)
 
@@ -140,13 +140,13 @@ def verify_parameter_freezing(model, expected_tune_vision=None):
     
     if expected_tune_vision is not None:
         if expected_tune_vision and vision_trainable_count == 0:
-            logging.warning("⚠️  WARNING: Expected tune_vision=True but no vision parameters are trainable!")
+            logging.warning("WARNING: Expected tune_vision=True but no vision parameters are trainable!")
             return False
         elif not expected_tune_vision and vision_trainable_count > 0:
-            logging.warning("⚠️  WARNING: Expected tune_vision=False but some vision parameters are trainable!")
+            logging.warning("WARNING: Expected tune_vision=False but some vision parameters are trainable!")
             return False
         else:
-            logging.info(f"✅ Parameter freezing verified: tune_vision={expected_tune_vision}")
+            logging.info(f"Parameter freezing verified: tune_vision={expected_tune_vision}")
             return True
     
     logging.info(f"Vision parameters: {vision_trainable_count}/{vision_total_count} trainable")
