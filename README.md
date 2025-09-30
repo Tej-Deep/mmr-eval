@@ -72,9 +72,11 @@ bash train/sft_qwen.sh
 
 We cloned [VLMEvalKit](https://github.com/open-compass/VLMEvalKit) at commit `db0c9ae2c7c2150b9b730b88326ebfb0bfb91356` and modified it accordingly based on the base policy model and evaluation task selected. 
 
+We recommend using vLLM version 0.10.1.1 with V1 engine, transformers version 4.55.2 and flash-attn version 2.8.0.post2 for inference. We experience varying results across models when different versions of these key packages are used, and found fixing these versions resulted in the best overall performance. 
+
 You can launch the evaluation using the corresponding launch scripts in each evaluation directory. For example, `eval/tts_eval/reward_guided_search/vllm_launch_bon_evaluation.sh`. 
 
-All our evaluation result files are at: https://huggingface.co/datasets/ob11/VL-PRM-Evaluation-Results/
+Evaluation result files can be found at: https://huggingface.co/datasets/ob11/VL-PRM-Evaluation-Results/
 
 ### Data
 
