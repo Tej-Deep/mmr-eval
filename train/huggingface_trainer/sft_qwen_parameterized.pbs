@@ -6,8 +6,6 @@
 #PBS -l select=1:ngpus=8:ncpus=96:mem=1800gb
 #PBS -l walltime=336:00:00
 
-# PBS handles output redirection via -o option
-
 echo "PBS_OUTPUT_FILE: ${PBS_O_WORKDIR}/${PBS_OUTPUT_FILE}"
 # Ensure immediate log flushing
 exec > >(stdbuf -oL tee -a "${PBS_O_WORKDIR}/${PBS_OUTPUT_FILE}")
@@ -15,7 +13,6 @@ exec 2>&1
 
 cd $PBS_O_WORKDIR
 
-# Check if virtual environment exists
 if [ ! -d ".venv" ]; then
     echo "ERROR: Virtual environment .venv not found in $PWD"
     exit 1
@@ -23,7 +20,6 @@ fi
 
 source .venv/bin/activate
 
-# Source environment file if it exists, otherwise warn
 if [ -f ".env.pbs" ]; then
     source .env.pbs
 else
@@ -34,22 +30,14 @@ export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
 export NCCL_DEBUG=INFO
 export HF_HOME=/scratch_aisg/SPEC-SF-AISG/cache/huggingface
 
-# Force immediate output flushing
+# Force immediate log flushing (usage depending on cluster)
 export PYTHONUNBUFFERED=1
 
-# Reference Running: qsub train/sft_qwen.pbs
 uid="$(date +%Y%m%d_%H%M%S)"
-# base_model="./models/Qwen2.5-VL-7B-Instruct-updated-tokens"
-# base_model="Qwen/Qwen2.5-VL-3B-Instruct"
 base_model="Qwen/Qwen2.5-VL-7B-Instruct"
-# base_model="llava-hf/llava-v1.6-mistral-7b-hf"
-# base_model="llava-hf/llama3-llava-next-8b-hf"
-# base_model="Qwen/Qwen2.5-VL-32B-Instruct"
-# dataset_name="ob11/visual-prm-training-data-v2-mc0.0-normal-token"
-dataset_name=${DATASET_NAME:-"ob11/VisualPRM300Kv0-full-dataset-mc0-o4-judge-incorrect-step-qwen-format"}
+dataset_name=${DATASET_NAME:-"ob11/VL-PRM300K-V1-train"}
 epochs=2
 
-# Use environment variables with defaults
 micro_batch_size=${MICRO_BATCH_SIZE:-1}
 gradient_accumulation_steps=${GRADIENT_ACCUMULATION_STEPS:-1}
 lr=${LEARNING_RATE:-1e-5}
@@ -74,7 +62,6 @@ echo "Learning rate: ${lr}"
 echo "Max grad norm: ${max_grad_norm}"
 echo "Tune vision encoder: ${tune_vision}"
 
-# accelerate launch train/sft_qwen_old_data_format_freeze_vit.py \
 accelerate launch train/sft_qwen.py \
     --seed 100 \
     --dataset_name ${dataset_name} \
@@ -98,7 +85,6 @@ accelerate launch train/sft_qwen.py \
     --eval_strategy "no" \
     --save_strategy "epoch" \
     --save_total_limit 1 \
-    # --save_steps 5000 \
 
 exit_code=$?
 echo "Training completed with exit code: $exit_code at $(date)"
