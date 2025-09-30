@@ -291,8 +291,8 @@ class LazySupervisedDataset(Dataset):
 
     def process_image_unified(self, image_file):
         processor = copy.deepcopy(self.data_args.image_processor)
-        # TODO: change to visualprm dataset
-        full_image_file = "/scratch_aisg/SPEC-SF-AISG/cache/huggingface/hub/datasets--ob11--visualPRM_v4/snapshots/901997e49ce2ab6805435af4d43d679aa3173a2f/" + image_file
+        # TODO: change to VL-PRM dataset
+        full_image_file = "<path_to_VL_PRM_DATASET>/snapshots/901997e49ce2ab6805435af4d43d679aa3173a2f/" + image_file
         try:
             image = Image.open(full_image_file).convert("RGB")
         except Exception as e:
