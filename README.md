@@ -51,7 +51,11 @@ This repository provides an overview of all resources for the paper ["Training V
 
 ### Training
 
-To train VL-PRM-3B/VL-PRM-7B, you can use the script `train/launch_training_scripts/sft_7b.sh` script, which works for VL-PRM-3B/VL-PRM-7B, or you can launch a sweep via `train/launch_training_scripts/launch_sweep_7b_sft.sh` if you are on a PBS cluster.
+To train VL-PRM-3B/VL-PRM-7B, 
+
+Alternatively, you can use the script `train/qwen_trainer/sft_7b.sh` script, which works for VL-PRM-3B/VL-PRM-7B, or you can launch a sweep via `train/qwen_trainer/launch_sweep_7b_sft.sh` if you are on a PBS cluster. This trainer is adapted from the official Qwen2.5-VL repository [link](https://github.com/QwenLM/Qwen2.5-VL/tree/main/train). 
+
+We experience similar results with both methods.
 
 To train VL-PRM-3B/VL-PRM-7B, we recommend 8 H100/H200 GPUs i.e. 1 node with 8 GPUs. We used 8 H200 GPUs for most of our jobs.
 
@@ -74,8 +78,7 @@ All our evaluation result files are at: https://huggingface.co/datasets/ob11/VL-
 
 ### Data
 
-To recreate VL-PRM-300K follow the steps below. 
-1. 
+To recreate VL-PRM-300K follow the steps below in `rollout_data_generation/README.md`. 
 
 ### Known Issues
 
