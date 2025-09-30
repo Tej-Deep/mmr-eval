@@ -1,5 +1,5 @@
 <div align="center">
-  <h1>Training Vision-Language Process Reward Models (VL-PRMs) for Test-Time Scaling in Multimodal Reasoning: Key Insights and Lessons Learned</h1>
+  <h1>Training Vision-Language Process Reward Models (VL-PRMs) for Test-Time Scaling in Multimodal Reasoning</h1>
   <p>Pairing VL-PRMs trained with abstract reasoning problems results in strong generalization and reasoning performance improvements when used with strong vision-language models in test-time scaling settings.
  </p>
 </div>
