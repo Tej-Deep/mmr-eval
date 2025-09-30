@@ -78,7 +78,7 @@ All our evaluation result files are at: https://huggingface.co/datasets/ob11/VL-
 
 ### Data
 
-To recreate VL-PRM-300K follow the steps below in `rollout_data_generation/README.md`. 
+To recreate VL-PRM-300K follow the steps in `rollout_data_generation/README.md`. 
 
 ### Known Issues
 
