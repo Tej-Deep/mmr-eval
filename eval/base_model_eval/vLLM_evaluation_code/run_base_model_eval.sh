@@ -1,22 +1,22 @@
 #!/bin/bash
 
 # Add the parent directory to PYTHONPATH so imports work correctly
-export PYTHONPATH="${PYTHONPATH}:/scratch_aisg/SPEC-SF-AISG/ob1/mmr-eval"
-# export PYTHONPATH="${PYTHONPATH}:/home/ubuntu/porialab-us-midwest-1/Tej/mmr-eval/mmr-eval"
+export PYTHONPATH="${PYTHONPATH}:/home/users/nus/ob1/scratch/vlprm"
+# export PYTHONPATH="${PYTHONPATH}:<absolute_path_to_parent_dir>"
 
-source /scratch_aisg/SPEC-SF-AISG/ob1/mmr-eval/qwen-evaluation/.venv/bin/activate
+source /home/users/nus/ob1/scratch/vlprm/eval/.venv/bin/activate
 echo "Python path after activation: $(which python)"
 echo "Python version: $(python --version)"
 
 
 dataset_list=(
-    # "mathvista_testmini"
-    "mathvision_test"
+    "mathvista_testmini"
+    # "mathvision_test"
 )
 
 # POLICY_MODEL_PATH="OpenGVLab/InternVL2_5-8B"
-POLICY_MODEL_PATH="openbmb/MiniCPM-V-2_6"
-# POLICY_MODEL_PATH="Qwen/Qwen2.5-VL-7B-Instruct"
+# POLICY_MODEL_PATH="openbmb/MiniCPM-V-2_6"
+POLICY_MODEL_PATH="Qwen/Qwen2.5-VL-3B-Instruct"
 
 # Extract model prefix from policy model path for job naming
 if [[ $POLICY_MODEL_PATH =~ [Qq]wen.*32B ]]; then
@@ -51,8 +51,8 @@ for dataset in "${dataset_list[@]}"; do
     CUDA_VISIBLE_DEVICES=$CUDA_VISIBLE_DEVICES python $RUN_FILE \
         --policy_model_path $POLICY_MODEL_PATH \
         --data $dataset \
-        --output_dir ./outputs/$model_prefix/$dataset-results # \
-        # --development_mode
+        --output_dir ./outputs/$model_prefix/$dataset-results \
+        --development_mode
 done
 
 

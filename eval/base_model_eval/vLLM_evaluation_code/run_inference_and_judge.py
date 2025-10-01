@@ -20,10 +20,10 @@ from transformers import (
     GenerationConfig,
 )
 # from evaluation.reward_guided_search.VisualPRMv2 import VisualPRM
-from evaluation.reward_guided_search.prompts import (
+from eval.tts_eval.reward_guided_search.prompts import (
     POLICY_VISUAL_ANALYST_SYS_PROMPT_V3,
 )
-from evaluation.reward_guided_search.utils import (
+from eval.tts_eval.reward_guided_search.utils.utils import (
     sample_to_images_list,
     convert_images_to_base64,
     prepare_question_array_with_base64_image_strings,
@@ -31,10 +31,10 @@ from evaluation.reward_guided_search.utils import (
     prepare_question_array_with_base64_image_strings_for_internvl_and_minicpm,
     # extract_boxed,
 )
-from evaluation.reward_guided_search.internvl_image_processing_utils import (
+from eval.tts_eval.reward_guided_search.utils.internvl_image_processing_utils import (
     load_image_from_base64,
 )
-from evaluation.reward_guided_search.puzzleTest_helpers import (
+from eval.tts_eval.reward_guided_search.puzzleTest_helpers import (
     load_puzzle_subset,
     build_puzzlevqa_prompt,
     build_algopuzzlevqa_prompt,
@@ -42,10 +42,12 @@ from evaluation.reward_guided_search.puzzleTest_helpers import (
     PUZZLE_DATASET_TYPES,
     ALGOPUZZLE_DATASET_TYPES,
 )
-from evaluation.reward_guided_search.mathvista_helper_functions import (
+from eval.tts_eval.reward_guided_search.mathvista_helper_functions import (
     calculate_mathvista_judge_evaluation_score,
+    load_mathvista_dataset,
+    build_mathvista_prompt,
 )
-from evaluation.reward_guided_search.mathvision_helper_functions import (
+from eval.tts_eval.reward_guided_search.mathvision_helper_functions import (
     load_mathvision_dataset,
     # build_mathvision_prompt,
     build_mathvision_prompt_original,
@@ -60,24 +62,24 @@ from PIL import Image
 import base64
 from io import BytesIO
 
-from evaluation.reward_guided_search.qwenvl_utils import process_vision_info
-from evaluation.common.logger import log_info
+from eval.tts_eval.reward_guided_search.utils.qwenvl_utils import process_vision_info
+from eval.base_model_eval.vLLM_evaluation_code.logger import log_info
 
 import json
 import ast
 import traceback
 
-from evaluation.common.send_telegram_notifications_helper import (
-    send_telegram_error_notification,
-    send_telegram_job_summary,
-)
-from evaluation.reward_guided_search.collate_final_eval_results import (
+# from evaluation.common.send_telegram_notifications_helper import (
+#     send_telegram_error_notification,
+#     send_telegram_job_summary,
+# )
+from eval.tts_eval.reward_guided_search.collate_final_eval_results import (
     calculate_evaluation_score_direct,
 )
-from evaluation.base_model_eval_code.judge_mathvista import (
+from eval.base_model_eval.vLLM_evaluation_code.judge_mathvista import (
     calculate_mathvista_judge_evaluation_score,
 )
-from evaluation.reward_guided_search.mathvista_helper_functions import (
+from eval.tts_eval.reward_guided_search.mathvista_helper_functions import (
     load_mathvista_dataset,
     build_mathvista_prompt,
 )
@@ -905,50 +907,51 @@ def main():
                 log_info(f"Judge evaluation error: {e}")
 
         # Send success telegram notification
-        try:
-            eval_score_percent_str = f"{eval_score:.2%}" if eval_score is not None else "N/A"
+        # Note: Telegram notifications disabled - helper module not found
+        # try:
+        #     eval_score_percent_str = f"{eval_score:.2%}" if eval_score is not None else "N/A"
 
-            # Prepare judge breakdown string
-            judge_breakdown = ""
-            if num_correct_samples_after_llm_judgement is not None and num_samples_after_llm_judgement is not None:
-                judge_breakdown = f" [{num_correct_samples_after_llm_judgement}/{num_samples_after_llm_judgement}]"
+        #     # Prepare judge breakdown string
+        #     judge_breakdown = ""
+        #     if num_correct_samples_after_llm_judgement is not None and num_samples_after_llm_judgement is not None:
+        #         judge_breakdown = f" [{num_correct_samples_after_llm_judgement}/{num_samples_after_llm_judgement}]"
 
-            # Create evaluation summary
-            extraction_description = "LLM Answer Extraction tries to extract answer from the text if not given a boxed answer."
-            eval_summary_msg = f"""{args.data}:
-Basic: {correct_count}/{total_count} = {eval_score_percent_str}
-With LLM Answer Extraction: {judge_breakdown} = {judge_score_percent}
+        #     # Create evaluation summary
+        #     extraction_description = "LLM Answer Extraction tries to extract answer from the text if not given a boxed answer."
+        #     eval_summary_msg = f"""{args.data}:
+        # Basic: {correct_count}/{total_count} = {eval_score_percent_str}
+        # With LLM Answer Extraction: {judge_breakdown} = {judge_score_percent}
 
-Basic Score includes null answer samples which are considered as incorrect;
-{extraction_description}"""
+        # Basic Score includes null answer samples which are considered as incorrect;
+        # {extraction_description}"""
 
-            # Send telegram notification
-            send_telegram_job_summary(
-                model_path_name=args.policy_model_path,
-                evaluation_results_json_file=output_file,
-                evaluation_run_logs_file=os.getenv("EVAL_RUN_LOG_FILE", ""),
-                extra_fields={
-                    "policy_model_path": args.policy_model_path,
-                    "dataset": args.data,
-                    "total_samples": total_count,
-                    "correct_answers": correct_count,
-                    "basic_accuracy": eval_score_percent_str,
-                    "judge_accuracy": judge_score_percent,
-                    "judge_correct_samples": num_correct_samples_after_llm_judgement if num_correct_samples_after_llm_judgement is not None else "N/A",
-                    "judge_total_samples": num_samples_after_llm_judgement if num_samples_after_llm_judgement is not None else "N/A",
-                    "data_begin": args.data_begin,
-                    "data_end": args.data_end,
-                    "partition_id": args.partition_id if args.partition_id is not None else "N/A",
-                    "run_datetime": run_datetime,
-                },
-                separator="\t",
-                include_header=True,
-                send_files=True,
-                message_prefix=f"✅[Eval Success]\n{eval_summary_msg}",
-            )
-            log_info("Telegram success notification sent")
-        except Exception as e:
-            log_info(f"Failed to send success notification to Telegram: {e}")
+        #     # Send telegram notification
+        #     send_telegram_job_summary(
+        #         model_path_name=args.policy_model_path,
+        #         evaluation_results_json_file=output_file,
+        #         evaluation_run_logs_file=os.getenv("EVAL_RUN_LOG_FILE", ""),
+        #         extra_fields={
+        #             "policy_model_path": args.policy_model_path,
+        #             "dataset": args.data,
+        #             "total_samples": total_count,
+        #             "correct_answers": correct_count,
+        #             "basic_accuracy": eval_score_percent_str,
+        #             "judge_accuracy": judge_score_percent,
+        #             "judge_correct_samples": num_correct_samples_after_llm_judgement if num_correct_samples_after_llm_judgement is not None else "N/A",
+        #             "judge_total_samples": num_samples_after_llm_judgement if num_samples_after_llm_judgement is not None else "N/A",
+        #             "data_begin": args.data_begin,
+        #             "data_end": args.data_end,
+        #             "partition_id": args.partition_id if args.partition_id is not None else "N/A",
+        #             "run_datetime": run_datetime,
+        #         },
+        #         separator="\t",
+        #         include_header=True,
+        #         send_files=True,
+        #         message_prefix=f"✅[Eval Success]\n{eval_summary_msg}",
+        #     )
+        #     log_info("Telegram success notification sent")
+        # except Exception as e:
+        #     log_info(f"Failed to send success notification to Telegram: {e}")
 
     except Exception as e:
         error_message = str(e)
@@ -968,32 +971,33 @@ Basic Score includes null answer samples which are considered as incorrect;
         )
 
         # Send error notification via Telegram
-        try:
-            # Add OOM indicator and partition info to the message
-            error_msg_prefix = ""
-            if is_oom:
-                error_msg_prefix = "🚨 OOM ERROR: "
-            if args.partition_id is not None:
-                error_msg_prefix += f"Partition {args.partition_id} failed - "
+        # Note: Telegram notifications disabled - helper module not found
+        # try:
+        #     # Add OOM indicator and partition info to the message
+        #     error_msg_prefix = ""
+        #     if is_oom:
+        #         error_msg_prefix = "🚨 OOM ERROR: "
+        #     if args.partition_id is not None:
+        #         error_msg_prefix += f"Partition {args.partition_id} failed - "
 
-            send_telegram_error_notification(
-                model_path_name=args.policy_model_path,
-                error_message=error_msg_prefix + error_message,
-                error_traceback=error_traceback,
-                evaluation_run_logs_file=os.getenv("EVAL_RUN_LOG_FILE", ""),
-                extra_fields={
-                    "data": args.data,
-                    "data_begin": args.data_begin,
-                    "data_end": args.data_end,
-                    "development_mode": args.development_mode,
-                    "partition_id": args.partition_id,
-                    "is_oom_error": is_oom,
-                    "policy_gpu": args.policy_gpu,
-                },
-                send_files=True,
-            )
-        except Exception as telegram_error:
-            log_info(f"Failed to send error notification to Telegram: {telegram_error}")
+        #     send_telegram_error_notification(
+        #         model_path_name=args.policy_model_path,
+        #         error_message=error_msg_prefix + error_message,
+        #         error_traceback=error_traceback,
+        #         evaluation_run_logs_file=os.getenv("EVAL_RUN_LOG_FILE", ""),
+        #         extra_fields={
+        #             "data": args.data,
+        #             "data_begin": args.data_begin,
+        #             "data_end": args.data_end,
+        #             "development_mode": args.development_mode,
+        #             "partition_id": args.partition_id,
+        #             "is_oom_error": is_oom,
+        #             "policy_gpu": args.policy_gpu,
+        #         },
+        #         send_files=True,
+        #     )
+        # except Exception as telegram_error:
+        #     log_info(f"Failed to send error notification to Telegram: {telegram_error}")
 
         # Re-raise the original exception to maintain proper exit code
         raise
