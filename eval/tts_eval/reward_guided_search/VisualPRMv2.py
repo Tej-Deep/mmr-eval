@@ -13,8 +13,8 @@ from qwen_vl_utils import process_vision_info
 from typing import List
 
 from prompts import PRM_SYSTEM_PROMPT_NORMAL_TOK_V2, PRM_SYSTEM_PROMPT_NORMAL_TOK
-from utils import prepare_question_array_with_base64_image_strings
-from logger import log_info
+from utils.utils import prepare_question_array_with_base64_image_strings
+from utils.logger import log_info
 
 # use for models with updated tokens
 # POSITIVE_TOKEN = "<+>"

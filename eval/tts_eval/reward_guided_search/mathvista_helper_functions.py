@@ -2,7 +2,7 @@ try:
     from .logger import log_info
 except ImportError:
     # Handle case when run as script
-    from logger import log_info
+    from utils.logger import log_info
 from datasets import load_dataset
 import pandas as pd
 import json

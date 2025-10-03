@@ -16,7 +16,14 @@ from VisualPRMv2 import VisualPRM
 from prompts import (
     POLICY_VISUAL_ANALYST_SYS_PROMPT_V3,
 )
-from utils import sample_to_images_list, convert_images_to_base64, prepare_question_array_with_base64_image_strings, extract_boxed, prepare_question_array_with_base64_image_strings_for_internvl_and_minicpm, prepare_question_array_with_base64_image_strings_mathvision
+from utils.utils import (
+    sample_to_images_list,
+    convert_images_to_base64,
+    prepare_question_array_with_base64_image_strings,
+    prepare_question_array_with_base64_image_strings_for_internvl_and_minicpm,
+    prepare_question_array_with_base64_image_strings_mathvision,
+    extract_boxed,
+)
 from puzzleTest_helpers import (
     load_puzzle_subset, build_puzzlevqa_prompt, build_algopuzzlevqa_prompt, get_puzzle_dataset_info, PUZZLE_DATASET_TYPES, ALGOPUZZLE_DATASET_TYPES, build_puzzlevqa_prompt_minicpm, build_algopuzzlevqa_prompt_minicpm
 )
@@ -28,24 +35,24 @@ import base64
 from io import BytesIO
 
 # from qwenvl_utils import process_vision_info
-from logger import log_info
+from utils.logger import log_info
 
 import json
 # import ast
 import traceback
 
-from evaluation.common.send_telegram_notifications_helper import (
-    send_telegram_error_notification,
-)
-from evaluation.reward_guided_search.collate_final_eval_results import calculate_evaluation_score_direct 
-from evaluation.reward_guided_search.mathvista_helper_functions import (
+# from evaluation.common.send_telegram_notifications_helper import (
+#     send_telegram_error_notification,
+# )
+from eval.tts_eval.reward_guided_search.collate_final_eval_results import calculate_evaluation_score_direct 
+from eval.tts_eval.reward_guided_search.mathvista_helper_functions import (
     load_mathvista_dataset,
     build_mathvista_prompt,
     build_minicpm_mathvista_cot_prompt,
     load_mathvista_dataset_from_file,
 )
 
-from evaluation.reward_guided_search.mathvision_helper_functions import (
+from eval.tts_eval.reward_guided_search.mathvision_helper_functions import (
     load_mathvision_dataset,
     build_mathvision_prompt,
 )
@@ -1276,24 +1283,24 @@ def main():
             if args.partition_id is not None:
                 error_msg_prefix += f"Partition {args.partition_id} failed - "
                 
-            send_telegram_error_notification(
-                model_path_name=args.policy_model_path,
-                error_message=error_msg_prefix + error_message,
-                error_traceback=error_traceback,
-                evaluation_run_logs_file=os.getenv("EVAL_RUN_LOG_FILE", ""),
-                extra_fields={
-                    "reward_model_path": args.reward_model_path,
-                    "data": args.data,
-                    "data_begin": args.data_begin,
-                    "data_end": args.data_end,
-                    "development_mode": args.development_mode,
-                    "partition_id": args.partition_id,
-                    "is_oom_error": is_oom,
-                    "policy_gpu": args.policy_gpu,
-                    "reward_gpu": args.reward_gpu,
-                },
-                send_files=True,
-            )
+            # send_telegram_error_notification(
+            #     model_path_name=args.policy_model_path,
+            #     error_message=error_msg_prefix + error_message,
+            #     error_traceback=error_traceback,
+            #     evaluation_run_logs_file=os.getenv("EVAL_RUN_LOG_FILE", ""),
+            #     extra_fields={
+            #         "reward_model_path": args.reward_model_path,
+            #         "data": args.data,
+            #         "data_begin": args.data_begin,
+            #         "data_end": args.data_end,
+            #         "development_mode": args.development_mode,
+            #         "partition_id": args.partition_id,
+            #         "is_oom_error": is_oom,
+            #         "policy_gpu": args.policy_gpu,
+            #         "reward_gpu": args.reward_gpu,
+            #     },
+            #     send_files=True,
+            # )
         except Exception as telegram_error:
             log_info(f"Failed to send error notification to Telegram: {telegram_error}")
 

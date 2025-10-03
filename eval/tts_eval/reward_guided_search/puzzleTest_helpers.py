@@ -22,7 +22,7 @@ from PIL import Image
 # from .logger import log_info
 # from logger import log_info
 try: # TODO: tech debt for now, revisit later, since this file is used both as module and script
-    from .logger import log_info
+    from utils.logger import log_info
 except ImportError:
     # Handle case when run as script
     from logger import log_info

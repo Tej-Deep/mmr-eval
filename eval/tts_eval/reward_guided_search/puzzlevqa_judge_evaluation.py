@@ -32,7 +32,7 @@ else:
 
 # Import from same directory
 try:
-    from logger import log_info
+    from utils.logger import log_info
 except ImportError:
     # Fallback to basic print if logger not available
     def log_info(message):
@@ -41,7 +41,7 @@ except ImportError:
 try:
     from puzzleTest_helpers import extract_puzzlevqa_answer
 except ImportError:
-    from evaluation.reward_guided_search.puzzleTest_helpers import extract_puzzlevqa_answer
+    from eval.tts_eval.reward_guided_search.puzzleTest_helpers import extract_puzzlevqa_answer
 
 
 class PuzzleVQAJudgeModel:
