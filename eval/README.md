@@ -33,3 +33,22 @@ cd base_model_eval/vLLM_evaluation_code
 - This will run the evaluation script for a Qwen2.5-VL-3B-Instruct base model.
 - If everything is installed correctly, you should get a score of 5/8 (62.5%) on the development set of MathVista evaluation (3/8 is the commmon score without flash-attn)
 - If you get a score of less than 6/8, please check that flash-attn is installed correctly, because you will get accuracy degradation without it
+
+# Running Greedy and Non-Greedy Search Evaluation
+
+- To run the non-greedy search (one-shot) search evaluation, you need to comment out the following line in the vllm_bon_greedy_search_no_template.py file:
+```python
+stop=['<|im_end|>', '<|endoftext|>'], # TODO: Important when doing Greedy, not when Non-Greedy, check this again when running
+include_stop_str_in_output=True,
+```
+
+- To run the greedy search evaluation, you should include the following lines in the vllm_bon_greedy_search_no_template.py file for the corresponding policy model:
+```python
+stop=[eos_token, NEWLINE_STEP_SEPERATOR], # TODO: Important when doing Greedy, not when Non-Greedy, check this again when running
+include_stop_str_in_output=True,
+```
+This ensures reward is calculated at the step-by-step level.
+
+Then run ```./run_bon_greedy_search_no_template.sh``` to run the evaluation.
+
+or ```./vllm_lazy_greedy_search_no_template.sh``` if you have a PBS cluster.
