@@ -14,6 +14,9 @@ else
     cd $PBS_O_WORKDIR
 fi
 
+# Load CUDA module
+module load cuda/12.6.0
+
 if [ "$POLICY_MODEL_PATH" == "OpenGVLab/InternVL2_5-8B" ]; then
     # Requires TRANSFORMERS_VERSION=4.37.2 # TODO: right now uses same env but should use another env
     source /data/projects/71001002/ob1/vlprm/.venv/bin/activate
