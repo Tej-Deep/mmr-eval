@@ -1,4 +1,12 @@
 import os
+
+# CRITICAL: Set ALL cache env vars BEFORE any imports that spawn workers
+os.environ["FLASHINFER_JIT_CACHE_DIR"] = "/scratch/users/nus/ob1/.cache/flashinfer"
+os.environ["VLLM_CACHE_ROOT"] = "/scratch/users/nus/ob1/.cache/vllm"
+os.environ["XDG_CACHE_HOME"] = "/scratch/users/nus/ob1/.cache"
+os.environ["TORCH_COMPILE_CACHE_DIR"] = "/scratch/users/nus/ob1/.cache/torch_compile"
+os.environ["VLLM_WORKER_MULTIPROC_METHOD"] = "spawn"
+
 import argparse
 import json
 import datetime
@@ -86,8 +94,6 @@ from eval.tts_eval.reward_guided_search.mathvista_helper_functions import (
 import re
 NEWLINE_STEP_SEPERATOR = "\n\n"
 BOXED_ANSWER_STR = r"\boxed{"
-
-os.environ["VLLM_WORKER_MULTIPROC_METHOD"] = "spawn"
 
 def extract_boxed(s):
     # Match both \boxed{...} and \\boxed{...} patterns to handle escape sequence issues

@@ -2,3 +2,4 @@ exclude-list.txt
 __pycache__/
 eval/base_model_eval/vLLM_evaluation_code/judge_mathvista/*
 .env
+eval/base_model_eval/vLLM_evaluation_code/outputs/*

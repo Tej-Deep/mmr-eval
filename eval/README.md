@@ -8,3 +8,10 @@ uv pip install packaging ninja
 uv pip install flash-attn --no-build-isolation
 uv pip sync requirements.txt --extra-index-url https://download.pytorch.org/whl/cu126 --index-strategy unsafe-best-match
 ```
+
+# vllm
+```bash
+module load CUDA/12.6.0
+uv add vllm datasets pandas torch
+uv pip sync requirements.txt --extra-index-url https://download.pytorch.org/whl/cu126 --index-strategy unsafe-best-match
+uv pip install flashinfer-python==0.2.12

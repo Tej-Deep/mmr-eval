@@ -1,10 +1,22 @@
 #!/bin/bash
+# Set all cache directories to scratch space
+export FLASHINFER_JIT_CACHE_DIR="/scratch/users/nus/ob1/.cache/flashinfer"
+export VLLM_CACHE_ROOT="/scratch/users/nus/ob1/.cache/vllm"
+export XDG_CACHE_HOME="/scratch/users/nus/ob1/.cache"
+export TORCH_COMPILE_CACHE_DIR="/scratch/users/nus/ob1/.cache/torch_compile"
+export VLLM_WORKER_MULTIPROC_METHOD="spawn"
+
+# Create cache directories if they don't exist
+# mkdir -p "$FLASHINFER_JIT_CACHE_DIR"
+# mkdir -p "$VLLM_CACHE_ROOT"
+# mkdir -p "$TORCH_COMPILE_CACHE_DIR"
+# echo "Created/verified cache directories in scratch space"
 
 # Add the parent directory to PYTHONPATH so imports work correctly
-export PYTHONPATH="${PYTHONPATH}:/home/users/nus/ob1/scratch/vlprm"
+export PYTHONPATH="${PYTHONPATH}:/data/projects/71001002/ob1/vlprm/"
 # export PYTHONPATH="${PYTHONPATH}:<absolute_path_to_parent_dir>"
 
-source /home/users/nus/ob1/scratch/vlprm/eval/.venv/bin/activate
+source /data/projects/71001002/ob1/vlprm/eval/.venv/bin/activate
 echo "Python path after activation: $(which python)"
 echo "Python version: $(python --version)"
 
@@ -23,6 +35,8 @@ if [[ $POLICY_MODEL_PATH =~ [Qq]wen.*32B ]]; then
     model_prefix="Q32B"
 elif [[ $POLICY_MODEL_PATH =~ [Qq]wen.*7B ]]; then
     model_prefix="Q7B"
+elif [[ $POLICY_MODEL_PATH =~ [Qq]wen.*3B ]]; then
+    model_prefix="Q3B"
 elif [[ $POLICY_MODEL_PATH =~ [Gg]emma.*27b ]]; then
     model_prefix="G27B"
 elif [[ $POLICY_MODEL_PATH =~ [Gg]emma.*12b ]]; then
