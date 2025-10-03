@@ -1,18 +1,3 @@
-#!/bin/bash
-# Set all cache directories to scratch space
-export FLASHINFER_JIT_CACHE_DIR="/scratch/users/nus/ob1/.cache/flashinfer"
-export VLLM_CACHE_ROOT="/scratch/users/nus/ob1/.cache/vllm"
-export XDG_CACHE_HOME="/scratch/users/nus/ob1/.cache"
-export TORCH_COMPILE_CACHE_DIR="/scratch/users/nus/ob1/.cache/torch_compile"
-export VLLM_WORKER_MULTIPROC_METHOD="spawn"
-
-# Create cache directories if they don't exist
-# mkdir -p "$FLASHINFER_JIT_CACHE_DIR"
-# mkdir -p "$VLLM_CACHE_ROOT"
-# mkdir -p "$TORCH_COMPILE_CACHE_DIR"
-# echo "Created/verified cache directories in scratch space"
-
-# Add the parent directory to PYTHONPATH so imports work correctly
 export PYTHONPATH="${PYTHONPATH}:/data/projects/71001002/ob1/vlprm/"
 # export PYTHONPATH="${PYTHONPATH}:<absolute_path_to_parent_dir>"
 
