@@ -35,7 +35,7 @@ fastapi-cloud-cli==0.1.5
 fastrlock==0.8.3
 filelock==3.19.1
 fire==0.7.1
-flashinfer-python==0.2.13
+flashinfer-python==0.2.12
 frozenlist==1.7.0
 fsspec==2025.7.0
 gguf==0.17.1

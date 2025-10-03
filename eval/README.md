@@ -12,6 +12,8 @@ uv pip sync requirements.txt --extra-index-url https://download.pytorch.org/whl/
 # vllm
 ```bash
 module load CUDA/12.6.0
-uv add vllm datasets pandas torch
+uv venv -p 3.12 --seed
+source .venv/bin/activate
 uv pip sync requirements.txt --extra-index-url https://download.pytorch.org/whl/cu126 --index-strategy unsafe-best-match
-uv pip install flashinfer-python==0.2.12
+pip install flash-attn --no-build-isolation
+```
