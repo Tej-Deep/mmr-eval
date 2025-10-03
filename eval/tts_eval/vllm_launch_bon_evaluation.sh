@@ -10,8 +10,8 @@ POLICY_MODEL_PATH="Qwen/Qwen2.5-VL-3B-Instruct" # Options: "google/gemma-3-12/27
 
 # Dataset configuration
 DATASETS=(
-    "AlgoPuzzleVQA_900_subset"  # AlgoPuzzleVQA 900 subset: 50 samples from each of 18 puzzle types (900 total)
-    # "puzzleVQA_1K_subset"  # PuzzleVQA 1K subset: 50 samples from each of 20 puzzle types (1000 total)
+    # "AlgoPuzzleVQA_900_subset"  # AlgoPuzzleVQA 900 subset: 50 samples from each of 18 puzzle types (900 total)
+    "puzzleVQA_1K_subset"  # PuzzleVQA 1K subset: 50 samples from each of 20 puzzle types (1000 total)
     # "mathvista_testmini"
     # "MMMU_DEV_VAL" # Original MMMU dataset from TSV file
     # "mathvision_test"

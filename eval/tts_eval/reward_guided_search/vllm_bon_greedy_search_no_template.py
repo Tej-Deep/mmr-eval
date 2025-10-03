@@ -27,6 +27,7 @@ from utils.utils import (
 from puzzleTest_helpers import (
     load_puzzle_subset, build_puzzlevqa_prompt, build_algopuzzlevqa_prompt, get_puzzle_dataset_info, PUZZLE_DATASET_TYPES, ALGOPUZZLE_DATASET_TYPES, build_puzzlevqa_prompt_minicpm, build_algopuzzlevqa_prompt_minicpm
 )
+from eval.eval_datasets import PUZZLE_VQA_DATA, ALGO_PUZZLE_VQA_DATA
 import regex
 
 from vllm import LLM, SamplingParams
@@ -526,13 +527,13 @@ def main():
                 "is_puzzle": False
             }
         elif args.data == "puzzleVQA_1K_subset":
-            dataset_df = load_puzzle_subset("/data/projects/71001002/ob1/vlprm/eval/eval_datasets/LLM-PuzzleTest/PuzzleVQA/data", "puzzleVQA_1K_subset")
+            dataset_df = load_puzzle_subset(str(PUZZLE_VQA_DATA), "puzzleVQA_1K_subset")
             dataset_info = get_puzzle_dataset_info("puzzleVQA_1K_subset")
             dataset_info["is_puzzle"] = True
             dataset_info["is_1k_subset"] = True
             dataset_info["interleave_image_tokens"] = False
         elif args.data == "AlgoPuzzleVQA_900_subset":
-            dataset_df = load_puzzle_subset("/data/projects/71001002/ob1/vlprm/eval/eval_datasets/LLM-PuzzleTest/AlgoPuzzleVQA/data", "AlgoPuzzleVQA_900_subset")
+            dataset_df = load_puzzle_subset(str(ALGO_PUZZLE_VQA_DATA), "AlgoPuzzleVQA_900_subset")
             dataset_info = get_puzzle_dataset_info("AlgoPuzzleVQA_900_subset")
             dataset_info["is_puzzle"] = True
             dataset_info["is_1k_subset"] = True
