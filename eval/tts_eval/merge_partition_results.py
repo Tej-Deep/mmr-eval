@@ -11,8 +11,6 @@ import argparse
 import os
 import sys
 
-from evaluation.reward_guided_search.mathvision_helper_functions import calculate_mathvision_judge_evaluation_score_all_sample_gpt_extraction
-
 # try:
 #     import weave
 #     from weave import EvaluationLogger
@@ -24,10 +22,11 @@ from evaluation.reward_guided_search.mathvision_helper_functions import calculat
 
 # Add parent directory to path to import evaluation utils
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from evaluation.reward_guided_search.collate_final_eval_results import calculate_evaluation_score_direct
-from evaluation.reward_guided_search.qwen_collate_final_evaluation import calculate_qwen_judge_evaluation_score
-from evaluation.reward_guided_search.puzzlevqa_judge_evaluation import calculate_puzzlevqa_judge_evaluation_score
-from evaluation.reward_guided_search.mathvista_helper_functions import calculate_mathvista_judge_evaluation_score, calculate_mathvista_judge_evaluation_score_all_sample_gpt_extraction
+from tts_eval.reward_guided_search.collate_final_eval_results import calculate_evaluation_score_direct
+from tts_eval.reward_guided_search.qwen_collate_final_evaluation import calculate_qwen_judge_evaluation_score
+from tts_eval.reward_guided_search.puzzlevqa_judge_evaluation import calculate_puzzlevqa_judge_evaluation_score
+from tts_eval.reward_guided_search.mathvista_helper_functions import calculate_mathvista_judge_evaluation_score, calculate_mathvista_judge_evaluation_score_all_sample_gpt_extraction
+from tts_eval.reward_guided_search.mathvision_helper_functions import calculate_mathvision_judge_evaluation_score_all_sample_gpt_extraction
 # from utils.evaluation import calculate_evaluation_score
 from common.send_telegram_notifications_helper import (
     send_telegram_job_summary,
@@ -426,37 +425,39 @@ def _main():
         
         Basic Score includes null answer samples which are considered as incorrect; 
         {extraction_description}"""
+
+        print(eval_summary)
         
-        send_telegram_job_summary(
-            model_path_name=args.policy_model_path,
-            evaluation_results_json_file=merged_file,
-            evaluation_run_logs_file=os.getenv("EVAL_RUN_LOG_FILE", ""),
-            extra_fields={
-                # "model_id": primary_model_id,
-                "policy_model_path": args.policy_model_path,
-                "reward_model_path": args.reward_model_path,
-                "dataset": args.dataset,
-                "total_samples": total,
-                "correct_answers": correct,
-                "basic_accuracy": eval_score_percent,
-                "judge_accuracy": judge_score_percent,
-                "judge_correct_samples": num_correct_samples_after_llm_judgement
-                if num_correct_samples_after_llm_judgement is not None
-                else "N/A",
-                "judge_total_samples": num_samples_after_llm_judgement
-                if num_samples_after_llm_judgement is not None
-                else "N/A",
-                "partitions_merged": len(partition_files),
-                "run_datetime": args.run_datetime,
-                # "weave_project": args.weave_project
-                # if not args.disable_weave
-                # else "disabled",
-            },
-            separator="\t",
-            include_header=True,
-            send_files=True,
-            message_prefix=f"✅[Eval Success]\n{eval_summary}",
-        )
+        # send_telegram_job_summary(
+        #     model_path_name=args.policy_model_path,
+        #     evaluation_results_json_file=merged_file,
+        #     evaluation_run_logs_file=os.getenv("EVAL_RUN_LOG_FILE", ""),
+        #     extra_fields={
+        #         # "model_id": primary_model_id,
+        #         "policy_model_path": args.policy_model_path,
+        #         "reward_model_path": args.reward_model_path,
+        #         "dataset": args.dataset,
+        #         "total_samples": total,
+        #         "correct_answers": correct,
+        #         "basic_accuracy": eval_score_percent,
+        #         "judge_accuracy": judge_score_percent,
+        #         "judge_correct_samples": num_correct_samples_after_llm_judgement
+        #         if num_correct_samples_after_llm_judgement is not None
+        #         else "N/A",
+        #         "judge_total_samples": num_samples_after_llm_judgement
+        #         if num_samples_after_llm_judgement is not None
+        #         else "N/A",
+        #         "partitions_merged": len(partition_files),
+        #         "run_datetime": args.run_datetime,
+        #         # "weave_project": args.weave_project
+        #         # if not args.disable_weave
+        #         # else "disabled",
+        #     },
+        #     separator="\t",
+        #     include_header=True,
+        #     send_files=True,
+        #     message_prefix=f"✅[Eval Success]\n{eval_summary}",
+        # )
         print("\nTelegram notification sent for merged results")
     except Exception as e:
         print(f"\nTelegram notification error: {e}")
