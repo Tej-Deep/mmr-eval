@@ -424,7 +424,7 @@ def main():
     parser.add_argument(
         "--data_dir", 
         type=str, 
-        default="/scratch_aisg/SPEC-SF-AISG/ob1/mmr-eval/qwen-evaluation/mmmu/data", 
+        default="/data/projects/71001002/ob1/vlprm/eval/eval_datasets", 
         help="The absolute path of MMMU dataset directory"
     )
     # parser.add_argument(
@@ -526,13 +526,13 @@ def main():
                 "is_puzzle": False
             }
         elif args.data == "puzzleVQA_1K_subset":
-            dataset_df = load_puzzle_subset("/scratch_aisg/SPEC-SF-AISG/ob1/mmr-eval/LLM-PuzzleTest/PuzzleVQA/data", "puzzleVQA_1K_subset")
+            dataset_df = load_puzzle_subset("/data/projects/71001002/ob1/vlprm/eval/eval_datasets/LLM-PuzzleTest/PuzzleVQA/data", "puzzleVQA_1K_subset")
             dataset_info = get_puzzle_dataset_info("puzzleVQA_1K_subset")
             dataset_info["is_puzzle"] = True
             dataset_info["is_1k_subset"] = True
             dataset_info["interleave_image_tokens"] = False
         elif args.data == "AlgoPuzzleVQA_900_subset":
-            dataset_df = load_puzzle_subset("/scratch_aisg/SPEC-SF-AISG/ob1/mmr-eval/LLM-PuzzleTest/AlgoPuzzleVQA/data", "AlgoPuzzleVQA_900_subset")
+            dataset_df = load_puzzle_subset("/data/projects/71001002/ob1/vlprm/eval/eval_datasets/LLM-PuzzleTest/AlgoPuzzleVQA/data", "AlgoPuzzleVQA_900_subset")
             dataset_info = get_puzzle_dataset_info("AlgoPuzzleVQA_900_subset")
             dataset_info["is_puzzle"] = True
             dataset_info["is_1k_subset"] = True
