@@ -52,3 +52,8 @@ This ensures reward is calculated at the step-by-step level.
 Then run ```./run_bon_greedy_search_no_template.sh``` to run the evaluation.
 
 or ```./vllm_lazy_greedy_search_no_template.sh``` if you have a PBS cluster.
+
+# Running LLM Judge Evaluation for MathVision
+- MathVision involves commonly answering questions with LaTex involved, hence we need to support SymPy answer validators for accurate output evaluation.
+
+- Run ```python mathvision_helper_functions.py <results_file.json>``` to run this evaluation manually and inspect the results to verify that the outputs are evaluated correctly.
