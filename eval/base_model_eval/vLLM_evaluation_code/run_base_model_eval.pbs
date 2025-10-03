@@ -15,23 +15,18 @@ else
 fi
 
 if [ "$POLICY_MODEL_PATH" == "OpenGVLab/InternVL2_5-8B" ]; then
-    # TRANSFORMERS_VERSION=4.37.2
-    source /scratch_aisg/SPEC-SF-AISG/ob1/mmr-eval/gemma_evaluation/internvl_env/.venv/bin/activate
-# elif [ "$POLICY_MODEL_PATH" == "openbmb/MiniCPM-V-2_6" ]; then
-#     # TRANSFORMERS_VERSION=4.37.2
-#     source /scratch_aisg/SPEC-SF-AISG/ob1/mmr-eval/gemma_evaluation/minicpm_env/.venv/bin/activate
-else 
-    source /scratch_aisg/SPEC-SF-AISG/ob1/mmr-eval/qwen-evaluation/.venv/bin/activate
+    # Requires TRANSFORMERS_VERSION=4.37.2 # TODO: right now uses same env but should use another env
+    source /data/projects/71001002/ob1/vlprm/.venv/bin/activate
+else
+    source /data/projects/71001002/ob1/vlprm/eval/.venv/bin/activate
 fi
-
-# source /scratch_aisg/SPEC-SF-AISG/ob1/mmr-eval/qwen-evaluation/.venv/bin/activate
 
 echo "Python path after activation: $(which python)"
 echo "Python version: $(python --version)"
 
 # Environment setup
 export CUDA_VISIBLE_DEVICES=0
-export HF_HOME=/scratch_aisg/SPEC-SF-AISG/cache/huggingface
+export HF_HOME=/home/users/nus/ob1/scratch/.cache/huggingface # TODO: Change accordingly
 export PYTHONUNBUFFERED=1
 
 # Quick CUDA driver initialization check
@@ -80,7 +75,7 @@ fi
 echo "✓ CUDA driver initialization check passed for GPU"
 
 # Add the parent directory to PYTHONPATH so imports work correctly
-export PYTHONPATH="${PYTHONPATH}:/scratch_aisg/SPEC-SF-AISG/ob1/mmr-eval"
+export PYTHONPATH="${PYTHONPATH}:/data/projects/71001002/ob1/vlprm/"
 
 # Get model path from environment variable (passed via qsub -v)
 if [ -z "$POLICY_MODEL_PATH" ]; then
@@ -142,8 +137,6 @@ echo "==========================================="
 
 if [ "$POLICY_MODEL_PATH" == "OpenGVLab/InternVL2_5-8B" ]; then
     RUN_FILE="run_inference_and_judge_internvl.py"
-# elif [ "$POLICY_MODEL_PATH" == "openbmb/MiniCPM-V-2_6" ]; then
-#     RUN_FILE="run_inference_and_judge_minicpm.py"
 else
     RUN_FILE="run_inference_and_judge.py"
 fi
