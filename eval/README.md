@@ -30,5 +30,5 @@ cd base_model_eval/vLLM_evaluation_code
 
 - Set an OpenAI API key in a .env file in the parent directory, as this evaluation requires a LLM Judge.
 - This will run the evaluation script for a Qwen2.5-VL-3B-Instruct base model.
-- If everything is installed correctly, you should get a score of 6/8 on the development set of MathVista evaluation
-- If you get a score of less than 6/8, please check that flash-attn is installed correctly, because you will get accuracy depreciation without it
+- If everything is installed correctly, you should get a score of 6/8 on the development set of MathVista evaluation (3/8 is the commmon score without flash-attn)
+- If you get a score of less than 6/8, please check that flash-attn is installed correctly, because you will get accuracy degradation without it
