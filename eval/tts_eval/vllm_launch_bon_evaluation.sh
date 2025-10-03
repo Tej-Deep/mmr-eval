@@ -3,29 +3,30 @@
 # Launcher script to submit multiple PBS jobs for BoN evaluation
 # Each checkpoint gets its own PBS job submitted to the queue
 
-CHECKPOINT_BASE_PATH="/data/projects/71001002/ob1/prm-training-code/training_outputs"
+# CHECKPOINT_BASE_PATH="/data/projects/71001002/ob1/prm-training-code/training_outputs"
 
 POLICY_MODEL_PATH="Qwen/Qwen2.5-VL-3B-Instruct" # Options: "google/gemma-3-12/27b-it", "Qwen/Qwen2.5-VL-3/7/32/72B-Instruct"
 # POLICY_MODEL_PATH="google/gemma-3-27b-it"
 
 # Dataset configuration
 DATASETS=(
-    "AlgoPuzzleVQA_900_subset"  # AlgoPuzzleVQA 900 subset: 50 samples from each of 18 puzzle types (900 total)
-    "puzzleVQA_1K_subset"  # PuzzleVQA 1K subset: 50 samples from each of 20 puzzle types (1000 total)
+    # "AlgoPuzzleVQA_900_subset"  # AlgoPuzzleVQA 900 subset: 50 samples from each of 18 puzzle types (900 total)
+    # "puzzleVQA_1K_subset"  # PuzzleVQA 1K subset: 50 samples from each of 20 puzzle types (1000 total)
     "mathvista_testmini"
-    "MMMU_DEV_VAL" # Original MMMU dataset from TSV file
-    "mathvision_test"         
+    # "MMMU_DEV_VAL" # Original MMMU dataset from TSV file
+    # "mathvision_test"
 )
 
 # Development mode flag (set to "true" to enable development mode)
-DEVELOPMENT_MODE="false"  # options: "true" "false"
+DEVELOPMENT_MODE="true"  # options: "true" "false"
 
 # PRM Checkpoints
 CHECKPOINT_NAMES=(
-    "Q3B_mc0_sr_mc0_balanced_bs2_gs4_lr1e-5_VF_0827_1452"
+    "/home/users/nus/ob1/scratch/.cache/huggingface/hub/models--ob11--Qwen-VL-PRM-3B/snapshots/99d3938012db52cb6a29506b9b553eb3af491a7e"
+    # "Q3B_mc0_sr_mc0_balanced_bs2_gs4_lr1e-5_VF_0827_1452"
     # "Q3B_mc0_sr_mc0_full_bs2_gs4_lr1e-5_VF_0827_1452"
     # "Q3B_sr_mc0_ablation_bs2_gs4_lr1e-5_VF_0828_211639"
-    "Q7B_mc0_sr_mc0_balanced_bs2_gs4_lr1e-5_VF_0826_2309"
+    # "Q7B_mc0_sr_mc0_balanced_bs2_gs4_lr1e-5_VF_0826_2309"
     # "Q7B_mc0_sr_mc0_full_bs2_gs4_lr1e-5_VF_0826_2309"
     # "Q7B_mc0_sr_mc0_ablation_bs2_gs4_lr1e-5_VF_0826_2309"
 )
@@ -77,8 +78,8 @@ echo ""
 # Loop through all checkpoint names and datasets to create job per combination
 for checkpoint_name in "${CHECKPOINT_NAMES[@]}"; do
     # Construct full checkpoint path
-    checkpoint="${CHECKPOINT_BASE_PATH}/${checkpoint_name}"
-    # checkpoint="${checkpoint_name}"
+    # checkpoint="${CHECKPOINT_BASE_PATH}/${checkpoint_name}"
+    checkpoint="/home/users/nus/ob1/scratch/.cache/huggingface/hub/models--ob11--Qwen-VL-PRM-3B/snapshots/99d3938012db52cb6a29506b9b553eb3af491a7e"
     
     # Create short name for job by extracting key segments
     # Extract important components: custom_tok, ablation_v3, Q7b_UT, vit_frozen/trained
