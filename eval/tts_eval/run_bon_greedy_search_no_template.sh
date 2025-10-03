@@ -2,9 +2,9 @@
 
 # Add the parent directory to PYTHONPATH so imports work correctly
 # export PYTHONPATH="${PYTHONPATH}:/home/ubuntu/porialab-us-midwest-1/Tej/mmr-eval/mmr-eval"
-export PYTHONPATH="${PYTHONPATH}:/scratch_aisg/SPEC-SF-AISG/ob1/mmr-eval"
+export PYTHONPATH="${PYTHONPATH}:/data/projects/71001002/ob1/vlprm/"
 
-source /scratch_aisg/SPEC-SF-AISG/ob1/mmr-eval/qwen-evaluation/.venv/bin/activate
+source /data/projects/71001002/ob1/vlprm/eval/.venv/bin/activate
 echo "Python path after activation: $(which python)"
 echo "Python version: $(python --version)"
 
@@ -19,13 +19,14 @@ dataset_list=(
     # "mathvision_test"
 )
 
-# POLICY_MODEL_PATH="Qwen/Qwen2.5-VL-7B-Instruct"
+POLICY_MODEL_PATH="Qwen/Qwen2.5-VL-3B-Instruct"
 # POLICY_MODEL_PATH="google/gemma-3-12b-it"
-POLICY_MODEL_PATH="openbmb/MiniCPM-V-2_6" # 8B
+# POLICY_MODEL_PATH="openbmb/MiniCPM-V-2_6" # 8B
 # POLICY_MODEL_PATH="OpenGVLab/InternVL2_5-8B"
 
-CHECKPOINT_BASE_PATH="/scratch_aisg/SPEC-SF-AISG/ob1/prm-training-code/training_outputs"
-checkpoint="${CHECKPOINT_BASE_PATH}/Q3B_mc0_sr_mc0_balanced_bs2_gs4_lr1e-5_VF_0827_1452"
+# CHECKPOINT_BASE_PATH="/data/projects/71001002/ob1/prm-training-code/training_outputs"
+# checkpoint="${CHECKPOINT_BASE_PATH}/Q3B_mc0_sr_mc0_balanced_bs2_gs4_lr1e-5_VF_0827_1452"
+checkpoint="Qwen/Qwen2.5-VL-3B-Instruct"
 
 # Performing Search and Generating Responses
 for dataset in "${dataset_list[@]}"; do

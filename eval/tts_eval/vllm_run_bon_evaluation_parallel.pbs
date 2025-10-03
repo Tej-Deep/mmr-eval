@@ -1,5 +1,6 @@
 #!/bin/bash
-#PBS -q AISG_large
+#PBS -q ic102
+#PBS -P 71001002
 #PBS -j oe
 #PBS -k oed
 #PBS -l select=1:ngpus=8:ncpus=96:mem=1800gb
@@ -13,14 +14,17 @@ else
     cd $PBS_O_WORKDIR
 fi
 
+# Load CUDA module
+module load cuda/12.6.0
+
 # Activate the virtual environment
-source /scratch_aisg/SPEC-SF-AISG/ob1/mmr-eval/qwen-evaluation/.venv/bin/activate
+source /data/projects/71001002/ob1/vlprm/eval/.venv/bin/activate
 echo "Python path after activation: $(which python)"
 echo "Python version: $(python --version)"
 
 # Environment setup
 export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
-export HF_HOME=/scratch_aisg/SPEC-SF-AISG/cache/huggingface
+export HF_HOME=/home/users/nus/ob1/scratch/.cache/huggingface
 export PYTHONUNBUFFERED=1
 
 # Quick CUDA driver initialization check
@@ -69,7 +73,7 @@ fi
 echo "✓ CUDA driver initialization check passed for all 8 GPUs"
 
 # Add the parent directory to PYTHONPATH so imports work correctly
-export PYTHONPATH="${PYTHONPATH}:/scratch_aisg/SPEC-SF-AISG/ob1/mmr-eval"
+export PYTHONPATH="${PYTHONPATH}:/data/projects/71001002/ob1/vlprm/"
 
 # Get checkpoint from environment variable (passed via qsub -v)
 if [ -z "$CHECKPOINT_PATH" ]; then

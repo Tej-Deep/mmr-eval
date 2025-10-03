@@ -3,7 +3,7 @@
 # Launcher script to submit multiple PBS jobs for BoN evaluation
 # Each checkpoint gets its own PBS job submitted to the queue
 
-CHECKPOINT_BASE_PATH="/scratch_aisg/SPEC-SF-AISG/ob1/prm-training-code/training_outputs"
+CHECKPOINT_BASE_PATH="/data/projects/71001002/ob1/prm-training-code/training_outputs"
 
 POLICY_MODEL_PATH="Qwen/Qwen2.5-VL-3B-Instruct" # Options: "google/gemma-3-12/27b-it", "Qwen/Qwen2.5-VL-3/7/32/72B-Instruct"
 # POLICY_MODEL_PATH="google/gemma-3-27b-it"
