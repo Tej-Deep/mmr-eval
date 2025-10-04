@@ -7,7 +7,7 @@ learning_rates=(1e-5 2e-5)
 max_grad_norms=(1)
 tune_vision_values=(true)
 datasets=(
-"ob11/VL-PRM300K-V1-train"
+"paht to dataset"
 )
 
 

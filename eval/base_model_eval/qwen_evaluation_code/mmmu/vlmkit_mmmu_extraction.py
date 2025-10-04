@@ -152,7 +152,7 @@ def main():
     
     # Evaluation parser
     eval_parser = subparsers.add_parser("eval", help="Run evaluation")
-    eval_parser.add_argument("--data-dir", type=str, default="/scratch_aisg/SPEC-SF-AISG/ob1/mmr-eval/qwen-evaluation/mmmu/data", help="The absolute path of MMMU_DEV_VAL.tsv")
+    eval_parser.add_argument("--data-dir", type=str, default="./data", help="The absolute path of MMMU_DEV_VAL.tsv")
     eval_parser.add_argument("--input-file", type=str, required=True, help="Input file with inference results")
     eval_parser.add_argument("--output-file", type=str, required=True, help="Output file path")
     eval_parser.add_argument("--dataset", type=str, default="MMMU_DEV_VAL", help="Dataset name")

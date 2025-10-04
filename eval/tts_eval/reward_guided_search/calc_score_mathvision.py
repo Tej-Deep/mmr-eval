@@ -56,7 +56,6 @@ def main():
     parser.add_argument(
         "--data-path",
         type=str,
-        # default="/home/ubuntu/porialab-us-midwest-1/Tej/mmr-eval/traces_data",
         required = True,
         help="Path to step traces",
     )
@@ -66,8 +65,6 @@ def main():
     path = args.data_path
 
     print(f"Data Path: {path}")
-
-    # filename = path.name
 
     data = load_json(path)
 
@@ -79,13 +76,9 @@ def main():
 
     major_score = 0
 
-    # is_iter = False
-
     total = 0
 
     for sidx, sample in enumerate(tqdm(data)):
-        # if "<image2>" not in sample['annotation']['question']:
-        #     continue
         gt_answer = sample["gt_answer"]
         pred_answer = sample['pred_answer']
 
@@ -134,6 +127,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-# /scratch_aisg/SPEC-SF-AISG/ob1/mmr-eval/evaluation/base_model_eval_code
-# /scratch_aisg/SPEC-SF-AISG/ob1/mmr-eval/evaluation/reward_guided_search

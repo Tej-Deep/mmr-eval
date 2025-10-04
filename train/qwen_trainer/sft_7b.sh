@@ -12,7 +12,6 @@ deepspeed=./scripts/zero3.json
 # Model configuration
 # llm=Qwen/Qwen2.5-VL-7B-Instruct
 llm="./custom_token_models/Qwen2.5-VL-7B-Instruct-updated-tokens"
-# llm="/scratch_aisg/SPEC-SF-AISG/ob1/prm-training-code/models/Qwen2.5-VL-7B-Instruct-updated-tokens"  # Using HuggingFace model ID
 
 # Training hyperparameters
 lr=2e-7
@@ -30,8 +29,8 @@ run_name="$(echo "${datasets}" | cut -d'%' -f1)-$(basename "${llm}")-$(date +%Y%
 output_dir="./outputs/${run_name}"
 
 # WandB
-export WANDB_ENTITY="aisg-arf"
-export WANDB_PROJECT="multimodal-reasoning"
+export WANDB_ENTITY=""
+export WANDB_PROJECT=""
 
 # Training arguments
 args="

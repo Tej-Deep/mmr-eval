@@ -12,13 +12,13 @@
 export MODEL_PATH="Qwen/Qwen2.5-VL-3B-Instruct"
 
 # Data directory (REQUIRED - path to MMMU data)
-export DATA_DIR="/scratch_aisg/SPEC-SF-AISG/ob1/mmr-eval/qwen-evaluation/mmmu/data"  # UPDATE THIS!
+export DATA_DIR="./data"  # UPDATE THIS!
 
 # Dataset to evaluate
 export DATASET="MMMU_DEV_VAL"  # Options: MMMU_DEV_VAL, MMMU_DEV, MMMU_TEST
 
 # Output directory
-export OUTPUT_DIR="/scratch_aisg/SPEC-SF-AISG/ob1/mmr-eval/qwen-evaluation/mmmu/results/parallel_inference"
+export OUTPUT_DIR="./results/parallel_inference"
 
 # Chain-of-Thought settings
 export USE_COT=true  # Set to true to enable CoT
@@ -92,7 +92,7 @@ if [ -f "../.venv/bin/activate" ]; then
 fi
 
 # Set Python path if needed
-export PYTHONPATH="${PYTHONPATH}:/scratch_aisg/SPEC-SF-AISG/ob1/mmr-eval"
+# export PYTHONPATH="${PYTHONPATH}:<path to eval folder>"
 
 # Run the parallel launcher
 ./launch_parallel_inference.sh

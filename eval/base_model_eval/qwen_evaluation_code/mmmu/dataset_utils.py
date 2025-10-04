@@ -19,8 +19,8 @@ def load_dataset(dataset_name='MMMU_DEV_VAL'):
     # if not os.path.exists(data_path) or md5(data_path) != MMMU_DATASET_MD5:
     #     print(f"Downloading {dataset_name} dataset...")
     #     download_file(MMMU_DATASET_URL, data_path)
-
-    data_path = "/scratch_aisg/SPEC-SF-AISG/ob1/mmr-eval/qwen-evaluation/mmmu/data/MMMU_DEV_VAL.tsv" 
+    # Replace with path to MMMU_DEV_VAL.tsv
+    data_path = "" 
     # Load the dataset
     data = pd.read_csv(data_path, sep="\t")
     data = data[data["split"] != "dev"]
@@ -68,7 +68,6 @@ def load_dataset_mathv(dataset_name='MathVision_MINI'):
         print(f"Downloading {dataset_name} dataset...")
         download_file(dataset_url, data_path)
 
-    # data_path = "/scratch_aisg/SPEC-SF-AISG/ob1/mmr-eval/qwen-evaluation/mmmu/data/MMMU_MATHV.tsv" 
     # Load the dataset
     data = pd.read_csv(data_path, sep="\t")
     # data = data[data["split"] != "dev"]

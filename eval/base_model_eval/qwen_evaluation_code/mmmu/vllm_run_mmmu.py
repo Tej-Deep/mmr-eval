@@ -528,7 +528,7 @@ def main():
     infer_parser = subparsers.add_parser("infer", help="Run inference")
     infer_parser.add_argument("--model-path", type=str, required=True, help="Path to the model")
     infer_parser.add_argument("--dataset", type=str, default="MMMU_DEV_VAL", help="Dataset name")
-    infer_parser.add_argument("--data-dir", type=str, default="/scratch_aisg/SPEC-SF-AISG/ob1/mmr-eval/qwen-evaluation/mmmu/data", help="The absolute path of MMMU_DEV_VAL.tsv")
+    infer_parser.add_argument("--data-dir", type=str, default="./data", help="The absolute path of MMMU_DEV_VAL.tsv")
     infer_parser.add_argument("--output-file", type=str, required=True, help="Output file path")
     infer_parser.add_argument("--use-cot", action="store_true", help="Use Chain-of-Thought prompting")
     infer_parser.add_argument("--cot-prompt", type=str, default="", help="Custom Chain-of-Thought prompt")
@@ -539,7 +539,7 @@ def main():
     
     # Evaluation parser
     eval_parser = subparsers.add_parser("eval", help="Run evaluation")
-    eval_parser.add_argument("--data-dir", type=str, default="/scratch_aisg/SPEC-SF-AISG/ob1/mmr-eval/qwen-evaluation/mmmu/data", help="The absolute path of MMMU_DEV_VAL.tsv")
+    eval_parser.add_argument("--data-dir", type=str, default="./data", help="The absolute path of MMMU_DEV_VAL.tsv")
     eval_parser.add_argument("--input-file", type=str, required=True, help="Input file with inference results")
     eval_parser.add_argument("--output-file", type=str, required=True, help="Output file path")
     eval_parser.add_argument("--dataset", type=str, default="MMMU_DEV_VAL", help="Dataset name")

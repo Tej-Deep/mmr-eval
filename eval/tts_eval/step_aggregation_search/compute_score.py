@@ -29,7 +29,6 @@ def main():
     parser.add_argument(
         "--data-dir",
         type=str,
-        # default="/home/ubuntu/porialab-us-midwest-1/Tej/mmr-eval/traces_data",
         required = True,
         help="Path to step traces",
     )

@@ -1,5 +1,5 @@
 #!/bin/bash
-#PBS -q AISG_large
+#PBS -q large
 #PBS -j oe
 #PBS -k oed
 #PBS -l select=1:ngpus=1:ncpus=12:mem=225gb
@@ -20,7 +20,7 @@ echo "Python version: $(python --version)"
 
 # Environment setup
 export CUDA_VISIBLE_DEVICES=0
-export HF_HOME=/scratch_aisg/SPEC-SF-AISG/cache/huggingface
+export HF_HOME="<Path to HF Cache>"
 export PYTHONUNBUFFERED=1
 
 # Quick CUDA driver initialization check

@@ -208,9 +208,9 @@ if __name__ == "__main__":
     
     # Enable Weights & Biases reporting while keeping physical text logs
     training_args.report_to = ["wandb"]
-    os.environ["WANDB_PROJECT"] = "multimodal-reasoning" # TODO
-    os.environ["WANDB_ENTITY"] = "aisg-arf" # TODO
-    logging.info("Enabled Weights & Biases reporting with project: multimodal-reasoning")
+    os.environ["WANDB_PROJECT"] = "<WANDB PROJECT NAME>" # TODO
+    os.environ["WANDB_ENTITY"] = "<WANDB USERNAME>" # TODO
+    logging.info("Enabled Weights & Biases reporting with project: <WANDB PROJECT NAME>")
     
     if training_args.logging_dir:
         log_file = os.path.join(training_args.logging_dir, "training.log")

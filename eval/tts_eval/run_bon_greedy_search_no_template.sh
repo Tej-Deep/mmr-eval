@@ -1,9 +1,8 @@
 #!/bin/bash
 
 # Add the parent directory to PYTHONPATH so imports work correctly
-export PYTHONPATH="${PYTHONPATH}:/data/projects/71001002/ob1/vlprm/"
+# export PYTHONPATH="${PYTHONPATH}:<path to repo>"
 
-source /data/projects/71001002/ob1/vlprm/eval/.venv/bin/activate
 echo "Python path after activation: $(which python)"
 echo "Python version: $(python --version)"
 
@@ -25,7 +24,7 @@ POLICY_MODEL_PATH="Qwen/Qwen2.5-VL-3B-Instruct"
 
 # CHECKPOINT_BASE_PATH="/data/projects/71001002/ob1/prm-training-code/training_outputs"
 # checkpoint="${CHECKPOINT_BASE_PATH}/Q3B_mc0_sr_mc0_balanced_bs2_gs4_lr1e-5_VF_0827_1452"
-checkpoint="/home/users/nus/ob1/scratch/.cache/huggingface/hub/models--ob11--Qwen-VL-PRM-3B/snapshots/99d3938012db52cb6a29506b9b553eb3af491a7e"
+checkpoint="<path to prm checkpoint>"
 
 # Performing Search and Generating Responses
 for dataset in "${dataset_list[@]}"; do

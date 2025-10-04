@@ -167,7 +167,7 @@ def _main():
     parser.add_argument(
         "--weave_project",
         type=str,
-        default="aisg-arf/mmr-eval",
+        default=None,
         help="Weave project name for logging",
     )
     parser.add_argument(

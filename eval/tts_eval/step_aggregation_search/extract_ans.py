@@ -149,7 +149,6 @@ def main():
     parser.add_argument(
         "--data-dir",
         type=str,
-        # default="/home/ubuntu/porialab-us-midwest-1/Tej/mmr-eval/traces_data",
         required = True,
         help="Path to step traces",
     )
@@ -290,7 +289,7 @@ def main():
             print("No samples requiring judge processing")
         
         # break
-        extracted_ans_dir = "/scratch_aisg/SPEC-SF-AISG/ob1/mmr-eval/evaluation/judge_step_eval/outputs/extracted_ans_outputs/PRM_V8B" # TODO: Change this to the correct model name
+        extracted_ans_dir = "./outputs/extracted_ans_outputs/PRM_V8B" # TODO: Change this to the correct model name
         policy_model = "g27b"
         filename_without_ext = path.stem  # Gets filename without extension
         save_json(data, f"{extracted_ans_dir}/{policy_model}_policy/{filename_without_ext}_extracted_ans.json")

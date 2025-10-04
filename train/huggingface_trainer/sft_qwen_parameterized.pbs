@@ -28,14 +28,14 @@ fi
 
 export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
 export NCCL_DEBUG=INFO
-export HF_HOME=/scratch_aisg/SPEC-SF-AISG/cache/huggingface
+# export HF_HOME=Specify Cache Path if needed
 
 # Force immediate log flushing (usage depending on cluster)
 export PYTHONUNBUFFERED=1
 
 uid="$(date +%Y%m%d_%H%M%S)"
 base_model="Qwen/Qwen2.5-VL-7B-Instruct"
-dataset_name=${DATASET_NAME:-"ob11/VL-PRM300K-V1-train"}
+dataset_name=${DATASET_NAME:-"path to dataset"}
 epochs=2
 
 micro_batch_size=${MICRO_BATCH_SIZE:-1}

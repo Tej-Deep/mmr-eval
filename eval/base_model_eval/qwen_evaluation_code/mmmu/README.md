@@ -86,7 +86,12 @@ python run_mmmu.py infer \
     ```
 
     ```bash
-    python run_mmmu.py infer         --model-path Qwen/Qwen2.5-VL-7B-Instruct         --data-dir /scratch_aisg/SPEC-SF-AISG/ob1/mmr-eval/qwen-evaluation/mmmu/data         --dataset MMMU_VAL         --output-file /scratch_aisg/SPEC-SF-AISG/ob1/mmr-eval/qwen-evaluation/mmmu/results/latest_mmmu_dev_val_predictions_cot.jsonl         --use-cot 
+    python run_mmmu.py infer \
+        --model-path Qwen/Qwen2.5-VL-7B-Instruct \         
+        --data-dir /data/mmmu \         
+        --dataset MMMU_VAL \         
+        --output-file latest_mmmu_dev_val_predictions_cot.jsonl \         
+        --use-cot 
     ```
 
 *   **Inference with Chain-of-Thought:**
@@ -99,8 +104,14 @@ python run_mmmu.py infer \
         --use-cot
     ```
 
-    CUDA_VISIBLE_DEVICES=0 python sglang_run_mmmu.py infer --model-path Qwen/Qwen2.5-VL-7B-Instruct --gpu-id 0 --data-begin 0 --data-end 900 --output-file /scratch_aisg/SPEC-SF-AISG/ob1/mmr-eval/qwen-evaluation/mmmu/results/full_900_rerun_2.jsonl
-
+    ```bash
+    CUDA_VISIBLE_DEVICES=0 python sglang_run_mmmu.py infer \
+        --model-path Qwen/Qwen2.5-VL-7B-Instruct \
+        --gpu-id 0 \
+        --data-begin 0 \
+        --data-end 900 \
+        --output-file ./results/full_900_rerun_2.jsonl
+    ```
 ### 2. Evaluation Mode (`eval`)
 
 This mode takes the inference results (`.jsonl` file) and evaluates them against the ground truth using a specified judge model and API.
@@ -120,9 +131,9 @@ python run_mmmu.py eval \
 
 ```bash
 CUDA_VISIBLE_DEVICES=0 python sglang_run_mmmu.py eval \
-    --data-dir /scratch_aisg/SPEC-SF-AISG/ob1/mmr-eval/qwen-evaluation/mmmu/data \
-    --input-file /scratch_aisg/SPEC-SF-AISG/ob1/mmr-eval/qwen-evaluation/mmmu/results/full_900_rerun_range_0_900.jsonl \
-    --output-file /scratch_aisg/SPEC-SF-AISG/ob1/mmr-eval/qwen-evaluation/mmmu/results/collated_results/run1.csv \
+    --data-dir ./mmmu/data \
+    --input-file ./mmmu/results/full_900_rerun_range_0_900.jsonl \
+    --output-file ./mmmu/results/collated_results/run1.csv \
     --dataset MMMU_DEV_VAL \
     --eval-model gpt-4.1-nano \
     --api-type mit \
@@ -130,11 +141,23 @@ CUDA_VISIBLE_DEVICES=0 python sglang_run_mmmu.py eval \
 ```
 
 ```bash
-python vllm_run_mmmu.py eval     --data-dir "/scratch_aisg/SPEC-SF-AISG/ob1/mmr-eval/qwen-evaluation/mmmu/data"     --input-file "<full_path_to_final_merged_file>"     --output-file "/scratch_aisg/SPEC-SF-AISG/ob1/mmr-eval/qwen-evaluation/mmmu/results/parallel_inference/<run_name>_evaluation_results.csv"     --dataset MMMU_DEV_VAL     --eval-model gpt-4.1     --api-type mit     --nproc 200
+python vllm_run_mmmu.py eval \
+    --data-dir "./mmmu/data" \
+    --input-file "<full_path_to_final_merged_file>" \
+    --output-file "./mmmu/results/parallel_inference/<run_name>_evaluation_results.csv" \
+    --dataset MMMU_DEV_VAL \
+    --eval-model gpt-4.1 \
+    --api-type mit \
+    --nproc 200
 ```
 
 ```bash
-CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 python vllm_run_mmmu.py infer         --model-path openbmb/MiniCPM-V-2_6         --data-dir /scratch_aisg/SPEC-SF-AISG/ob1/mmr-eval/qwen-evaluation/mmmu/data         --dataset MMMU_DEV_VAL         --output-file /scratch_aisg/SPEC-SF-AISG/ob1/mmr-eval/qwen-evaluation/mmmu/results/test_minicpm_MMMU_validation.jsonl         --use-cot
+CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 python vllm_run_mmmu.py infer \
+    --model-path openbmb/MiniCPM-V-2_6 \
+    --data-dir ./mmmu/data \
+    --dataset MMMU_DEV_VAL \
+    --output-file ./mmmu/results/test_minicpm_MMMU_validation.jsonl \
+    --use-cot
 ```
 
 **Arguments:**

@@ -28,7 +28,6 @@ from common.logger import log_info
 
 # Data paths for different evaluation datasets
 DATA_PATHS = {
-    # "mathvista_testmini": "../eval_datasets/MathVista/data/testmini-00000-of-00001-725687bf7a18d64b.parquet", 
     "mmmu_dev": "eval_datasets/MMMU/data/dev-00000-of-00001.parquet", 
 }
 

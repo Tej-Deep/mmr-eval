@@ -30,11 +30,8 @@ def calculate_hits(json_path):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) > 1:
-        results_JSON_file = sys.argv[1]
-    else:
-        results_JSON_file = "/scratch_aisg/SPEC-SF-AISG/ob1/mmr-eval/evaluation/majority_voting/outputs/majority_voting/mmmu_validation-results/majority_voting_mmmu_validation_0-900_20250815_002603.json"
-    
+    results_JSON_file = sys.argv[1]
+
     results = calculate_hits(results_JSON_file)
     print(f"Hits: {results['hits']}/{results['total']}")
     print(f"Accuracy: {results['accuracy']:.2%}")

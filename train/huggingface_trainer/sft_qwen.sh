@@ -6,7 +6,7 @@ export NCCL_DEBUG=INFO
 
 uid="$(date +%Y%m%d_%H%M%S)"
 base_model="Qwen/Qwen2.5-VL-7B-Instruct"
-dataset_name="ob11/VL-PRM300K-V1-train"
+dataset_name="path to dataset"
 epochs=2
 micro_batch_size=2 # -> batch_size will be 64 if 8 gpus, per device batch size in single node; max this without OOM
 gradient_accumulation_steps=32 # gradually increase first, requires more GPU memory but less than increasing micro_batch_size

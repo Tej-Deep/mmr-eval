@@ -424,16 +424,10 @@ def main():
     )
     parser.add_argument(
         "--data_dir", 
+        required = True,
         type=str, 
-        default="/data/projects/71001002/ob1/vlprm/eval/eval_datasets", 
         help="The absolute path of MMMU dataset directory"
     )
-    # parser.add_argument(
-    #     "--puzzlevqa_data_dir",
-    #     type=str,
-    #     default="/scratch_aisg/SPEC-SF-AISG/ob1/mmr-eval/LLM-PuzzleTest/PuzzleVQA/data",
-    #     help="The absolute path of PuzzleVQA dataset directory"
-    # )
     parser.add_argument(
         "--use_cot", 
         action="store_true", 
@@ -507,7 +501,7 @@ def main():
         if args.data == "mathvista_testmini":
             if "minicpm" in args.policy_model_path.lower():
                 log_info("Loading MathVista dataset...")
-                dataset_df = load_mathvista_dataset_from_file('/scratch_aisg/SPEC-SF-AISG/ob1/mmr-eval/evaluation/base_model_eval_code/data', 'MathVista_MINI')
+                dataset_df = load_mathvista_dataset_from_file('../../base_model_eval/data', 'MathVista_MINI')
             else:
                 log_info("Loading MathVista dataset...")
                 dataset_df = load_mathvista_dataset('AI4Math/MathVista', 'testmini')

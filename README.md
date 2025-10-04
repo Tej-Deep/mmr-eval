@@ -7,37 +7,13 @@
 
 <!-- ![](visuals/) -->
 
-****************************************************************
+This repository provides an overview of all resources for the paper `Training Vision-Language Process Reward Models for Test-Time Scaling in Multimodal Reasoning: Key Insights and Lessons Learned`.
 
-**Updates:**
-
-* 2025-09: Released VL-PRMs: [Arxiv](https://arxiv.org/pdf/2509.23250)
-
-****************************************************************
-
-This repository provides an overview of all resources for the paper ["Training Vision-Language Process Reward Models for Test-Time Scaling in Multimodal Reasoning: Key Insights and Lessons Learned"](https://arxiv.org/pdf/2509.23250).
-
-- [Artifacts](#artifacts)
 - [Structure](#structure)
 - [Data](#data)
 - [Training](#training)
 - [Evaluation](#evaluation)
 - [Known Issues](#known-issues)
-
-### Artifacts
-
-- **Paper**: https://arxiv.org/pdf/2509.23250
-- **VL-PRM300K Dataset**: 
-    - [Raw Version](https://huggingface.co/datasets/ob11/VL-PRM300K)
-    - [Training Version](https://huggingface.co/datasets/ob11/VL-PRM300K-V1-train) 
-- **Model**:
-    - [VL-PRM-3B](https://huggingface.co/ob11/Qwen-VL-PRM-3B)
-    - [VL-PRM-7B](https://huggingface.co/ob11/Qwen-VL-PRM-7B)
-- **Weight and Biases Training Logs**:
-    - [VL-PRM-3B](https://wandb.ai/aisg-arf/multimodal-reasoning/runs/pnsncs80)
-    - [VL-PRM-7B](https://wandb.ai/aisg-arf/multimodal-reasoning/runs/pj4oc0qh)
-- **Evaluation Files**: 
-    - All our evaluation result files are at: https://huggingface.co/datasets/ob11/VL-PRM-Evaluation-Results
 
 ### Structure
 
@@ -57,7 +33,6 @@ To train VL-PRM-3B/VL-PRM-7B, we recommend 8 H100/H200 GPUs i.e. 1 node with 8 G
 
 Quick start:
 ```
-git clone https://github.com/theogbrand/vlprm.git
 cd vlprm/train/huggingface_trainer
 uv pip install -r requirements.txt
 bash train/sft_qwen.sh
@@ -72,26 +47,6 @@ We recommend using vLLM version 0.10.1.1 with V1 engine, transformers version 4.
 
 You can launch the evaluation using the corresponding launch scripts in each evaluation directory. For example, `eval/tts_eval/reward_guided_search/vllm_launch_bon_evaluation.sh`. 
 
-Evaluation result files can be found at: https://huggingface.co/datasets/ob11/VL-PRM-Evaluation-Results/
-
 ### Data
 
 To recreate VL-PRM-300K follow the steps in `rollout_data_generation/README.md`. 
-
-### Known Issues
-
-- Reproducing the results in the paper requires using the exact same seed for the synthetic data generation and training the VL-PRMs.
-
-### Citation
-
-```bibtex
-@misc{ong2025vlprms,
-      title={Training Vision-Language Process Reward Models for Test-Time Scaling in Multimodal Reasoning: Key Insights and Lessons Learned}, 
-      author={Brandon Ong, Tej Deep Pala, Vernon Toh, William Chandra Tjhi, and Soujanya Poria},
-      year={2025},
-      eprint={2509.23250},
-      archivePrefix={arXiv},
-      primaryClass={cs.AI},
-      url={https://arxiv.org/pdf/2509.23250}, 
-}
-```

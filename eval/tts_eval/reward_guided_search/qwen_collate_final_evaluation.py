@@ -4,7 +4,7 @@ Adapts the evaluation pipeline from qwen-evaluation/mmmu/ to work with BoN outpu
 
 Can be run standalone:
     python qwen_collate_final_evaluation.py --input results.json --output evaluation_results.csv
-    python qwen_collate_final_evaluation.py --input /scratch_aisg/SPEC-SF-AISG/ob1/mmr-eval/evaluation/reward_guided_search/outputs/VisualPRM-7B/sr_Q7B_mc0_visualprm_data_normal_tok_full_non_balanced_v2_p100_vit_trained_20250820_095203/MMMU_DEV_VAL-results/result-p0-0-225-20250822_135643.json --nproc 200
+    python qwen_collate_final_evaluation.py --input ./outputs/VisualPRM-7B/sr_Q7B_mc0_visualprm_data_normal_tok_full_non_balanced_v2_p100_vit_trained_20250820_095203/MMMU_DEV_VAL-results/result-p0-0-225-20250822_135643.json --nproc 200
 """
 
 import os
@@ -58,7 +58,7 @@ def load_dataset(dataset_name='MMMU_DEV_VAL'):
     #     print(f"Downloading {dataset_name} dataset...")
     #     download_file(MMMU_DATASET_URL, data_path)
 
-    data_path = "/scratch_aisg/SPEC-SF-AISG/ob1/mmr-eval/qwen-evaluation/mmmu/data/MMMU_DEV_VAL.tsv" 
+    data_path = "../../base_model_eval/qwen-evaluation/mmmu/data/MMMU_DEV_VAL.tsv" 
     # Load the dataset
     data = pd.read_csv(data_path, sep="\t")
     data = data[data["split"] != "dev"]
